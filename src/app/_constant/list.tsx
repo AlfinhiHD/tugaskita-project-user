@@ -20,9 +20,15 @@ export const navigationItems = [
     id: "tukar-poin",
   },
   {
+    icon: ClipboardList,
+    label: "Riwayat",
+    path: "/riwayat",
+    id: "riwayat",
+  },
+  {
     icon: User,
     label: "Profil Saya",
-    path: "/profil",
+    path: "/profil-saya",
     id: "profil",
   },
   {

@@ -3,46 +3,50 @@
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import MainTable from "@/app/_components/main-table";
-import { Coins, ClipboardList, ClipboardCheck } from "lucide-react";
+import { Coins, ClipboardList, ClipboardCheck, BarChart2 } from "lucide-react";
 import useDashboard from "../_hooks/useDashboard";
 
 const Dashboard = () => {
   const { todaysTasks, columns } = useDashboard();
 
   return (
-    <div className="page-wrapper">
-      <h1 className="font-bold text-3xl mb-8">Dashboard</h1>
-      <div className="bg-blue-100 p-6 rounded-lg">
-        <div className="flex items-center mb-8 bg-green-200 rounded-md p-6">
-          <div className="flex items-center mr-12 flex-1">
-            <Coins className="w-12 h-12 mr-4" />
-            <div>
-              <p className="text-lg font-semibold">Total Poin</p>
-              <p className="text-lg">
-                Anda memiliki <span className="font-bold text-xl">1250</span>{" "}
-                poin
-              </p>
-            </div>
-          </div>
-          <div className="flex items-center flex-1">
-            <ClipboardCheck className="w-12 h-12 mr-4" />
-            <div>
-              <p className="text-lg font-semibold">Tugas Diselesaikan</p>
-              <p className="text-lg">
-                Anda telah menyelesaikan{" "}
-                <span className="font-bold text-xl">15</span> tugas
-              </p>
-            </div>
-          </div>
+    <div className="page-wrapper bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen p-8">
+      <div className="max-w-7xl mx-auto mt-3">
+        <h1 className="font-bold text-4xl mt-3 mb-8 text-blue-800 flex items-center">
+          <BarChart2 className="mr-3 h-10 w-10" />
+          Dashboard
+        </h1>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          <Card className="bg-gradient-to-br from-green-400 to-blue-500 text-white shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <CardContent className="flex items-center p-6">
+              <Coins className="w-16 h-16 mr-6 bg-white text-green-500 rounded-full p-3" />
+              <div>
+                <p className="text-xl font-semibold mb-1">Total Poin</p>
+                <p className="text-3xl font-bold">1250 poin</p>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gradient-to-br from-purple-400 to-pink-500 text-white shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <CardContent className="flex items-center p-6">
+              <ClipboardCheck className="w-16 h-16 mr-6 bg-white text-purple-500 rounded-full p-3" />
+              <div>
+                <p className="text-xl font-semibold mb-1">Tugas Diselesaikan</p>
+                <p className="text-3xl font-bold">15 tugas</p>
+              </div>
+            </CardContent>
+          </Card>
         </div>
 
-        <div className="mt-12 mb-8 flex items-center">
-          <ClipboardList className="w-8 h-8 mr-2" />
-          <h2 className="text-xl font-bold">Tugas Hari Ini</h2>
-        </div>
-
-        <Card className="w-full bg-white">
-          <CardContent className="overflow-x-auto">
+        <Card className="bg-white shadow-xl rounded-xl overflow-hidden">
+          <CardHeader className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-6">
+            <CardTitle className="text-2xl font-bold flex items-center">
+              <ClipboardList className="w-8 h-8 mr-3" />
+              Tugas Hari Ini
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="p-6">
             <MainTable
               columns={columns}
               data={todaysTasks}

@@ -3,7 +3,6 @@
 import React from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Plus, Search, Filter, Calendar, ChevronLeft, ChevronRight, Clipboard } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -11,34 +10,40 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import useTugas from "../_hooks/useTugas";
-import TugasCard from "./tugas-card";
+import { Search, Filter, ChevronLeft, ChevronRight, Gift } from "lucide-react";
+import useTukarPoin from "../_hooks/useTukarPoin";
+import RewardCard from "./tukar-poin-card";
 
-const TugasPage = () => {
+const TukarPoinPage = () => {
   const {
     search,
     setSearch,
     pointRange,
     setPointRange,
-    endDate,
-    setEndDate,
-    currentTugas,
     currentPage,
     setCurrentPage,
+    currentRewards,
     pageCount,
-  } = useTugas();
+    userPoints,
+  } = useTukarPoin();
+
+  const handleExchange = (reward) => {
+    console.log("Reward ditukar:", reward);
+  };
 
   return (
     <div className="page-wrapper bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen p-8">
       <div className="max-w-7xl mx-auto mt-3">
         <div className="flex justify-between items-center mb-8">
           <h1 className="font-bold text-4xl text-blue-800 flex items-center">
-            <Clipboard className="mr-3 h-10 w-10" />
-            Daftar Tugas
+            <Gift className="mr-3 h-10 w-10" />
+            Tukar Poin
           </h1>
-          <Button className="bg-green-500 hover:bg-green-600 text-white rounded-full px-6 py-2 flex items-center">
-            <Plus className="mr-2 h-5 w-5" /> Ajukan Tugas
-          </Button>
+          <div className="bg-gradient-to-r from-green-400 to-blue-500 p-1 rounded-lg shadow-lg">
+            <span className="block bg-white px-4 py-2 rounded-md text-lg">
+              Poin Anda: <b className="text-green-600">{userPoints}</b> Poin
+            </span>
+          </div>
         </div>
 
         <div className="bg-white shadow-xl rounded-xl overflow-hidden">
@@ -47,7 +52,7 @@ const TugasPage = () => {
               <div className="flex flex-wrap items-center gap-4">
                 <div className="relative">
                   <Input
-                    placeholder="Cari tugas..."
+                    placeholder="Cari reward..."
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
                     className="pl-10 pr-4 py-2 w-64 rounded-full"
@@ -67,15 +72,6 @@ const TugasPage = () => {
                     </SelectContent>
                   </Select>
                   <Filter className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-                </div>
-                <div className="relative">
-                  <Input
-                    type="date"
-                    value={endDate}
-                    onChange={(e) => setEndDate(e.target.value)}
-                    className="pl-10 pr-4 py-2 w-48 rounded-full"
-                  />
-                  <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
                 </div>
               </div>
 
@@ -107,8 +103,13 @@ const TugasPage = () => {
 
           <div className="p-6">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {currentTugas.map((tugas) => (
-                <TugasCard key={tugas.id} tugas={tugas} />
+              {currentRewards.map((reward) => (
+                <RewardCard
+                  key={reward.id}
+                  reward={reward}
+                  userPoints={userPoints}
+                  onExchange={handleExchange}
+                />
               ))}
             </div>
           </div>
@@ -118,4 +119,4 @@ const TugasPage = () => {
   );
 };
 
-export default TugasPage;
+export default TukarPoinPage;
