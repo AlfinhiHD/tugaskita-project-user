@@ -2,3 +2,7 @@
 @tailwind components;
 @tailwind utilities;
   
+.page-wrapper {
+    @apply px-8 pb-8 pt-2;
+  }
+  

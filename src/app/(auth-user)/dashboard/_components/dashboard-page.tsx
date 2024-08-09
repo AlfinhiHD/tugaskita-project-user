@@ -3,24 +3,34 @@
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import MainTable from "@/app/_components/main-table";
-import { Coins, ClipboardList } from "lucide-react";
+import { Coins, ClipboardList, ClipboardCheck } from "lucide-react";
 import useDashboard from "../_hooks/useDashboard";
 
 const Dashboard = () => {
   const { todaysTasks, columns } = useDashboard();
 
   return (
-    <div className="p-8">
+    <div className="page-wrapper">
       <h1 className="font-bold text-3xl mb-8">Dashboard</h1>
       <div className="bg-blue-100 p-6 rounded-lg">
-        <div className="flex items-center mb-8 bg-blue-300 rounded-md p-6 ">
-          <div className="flex items-center mr-12">
+        <div className="flex items-center mb-8 bg-green-200 rounded-md p-6">
+          <div className="flex items-center mr-12 flex-1">
             <Coins className="w-12 h-12 mr-4" />
             <div>
               <p className="text-lg font-semibold">Total Poin</p>
               <p className="text-lg">
                 Anda memiliki <span className="font-bold text-xl">1250</span>{" "}
                 poin
+              </p>
+            </div>
+          </div>
+          <div className="flex items-center flex-1">
+            <ClipboardCheck className="w-12 h-12 mr-4" />
+            <div>
+              <p className="text-lg font-semibold">Tugas Diselesaikan</p>
+              <p className="text-lg">
+                Anda telah menyelesaikan{" "}
+                <span className="font-bold text-xl">15</span> tugas
               </p>
             </div>
           </div>

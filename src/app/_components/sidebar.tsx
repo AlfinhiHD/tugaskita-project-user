@@ -67,7 +67,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-blue-600 text-white w-64">
+    <div className="min-h-screen min-w-52 flex flex-col bg-blue-600 text-white">
       <div className="p-4">
         <div className="flex items-center mb-8">
           <Image

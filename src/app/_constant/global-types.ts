@@ -3,3 +3,10 @@ export type LoginValue = {
     password: string,
     rememberMe: boolean
 }
+
+export type TugasDetail = {
+    judul: string;
+    poin: number;
+    tenggat: string;
+    deskripsi: string;
+  }
