@@ -5,9 +5,15 @@ import { Button } from "@/components/ui/button";
 import useProfilSaya from "../_hooks/useProfilSaya";
 import ChangePasswordDialog from "./change-password-dialog";
 import { Mail, Star, CheckCircle, User } from "lucide-react";
+import { ProfilSayaSkeleton } from "@/app/_components/skeletons";
+import Image from "next/image";
 
 const ProfilSaya = () => {
-  const { user, isChangingPassword, setIsChangingPassword } = useProfilSaya();
+  const { user, isChangingPassword, setIsChangingPassword, taskDone, loadingProfile, loadingTaskDone } = useProfilSaya();
+
+  if (loadingProfile && loadingTaskDone) {
+    return <ProfilSayaSkeleton />;
+  }
 
   return (
     <div className="page-wrapper p-8 bg-gray-100 min-h-screen">
@@ -19,9 +25,11 @@ const ProfilSaya = () => {
       <div className="max-w-3xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
         <div className="bg-blue-700 p-8 text-white">
           <div className="flex flex-col md:flex-row items-center">
-            <img
-              src={user.photo}
+            <Image
+              src={user.image || '/assets/images/default-image.jpg'}
               alt={user.name}
+              width={192}
+              height={192}
               className="w-32 h-32 md:w-48 md:h-48 rounded-full mb-4 md:mb-0 md:mr-8 object-cover border-4 border-white shadow-lg"
             />
             <div className="text-center md:text-left flex-grow">
@@ -41,7 +49,7 @@ const ProfilSaya = () => {
                 <Star className="w-6 h-6 text-blue-700 mr-2" />
                 <p className="text-lg font-semibold text-blue-700">Poin</p>
               </div>
-              <p className="text-3xl font-bold text-blue-800">{user.points}</p>
+              <p className="text-3xl font-bold text-blue-800">{user.point}</p>
             </div>
             <div className="bg-green-100 p-6 rounded-lg text-center">
               <div className="flex items-center justify-center mb-2">
@@ -51,7 +59,7 @@ const ProfilSaya = () => {
                 </p>
               </div>
               <p className="text-3xl font-bold text-green-800">
-                {user.completedTasks}
+                {taskDone}
               </p>
             </div>
           </div>

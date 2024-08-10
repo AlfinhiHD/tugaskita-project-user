@@ -97,3 +97,16 @@ const rewardsList = [
   { id: 8, name: "Voucher Belanja", image: "/assets/images/default-image.jpg", points: 200 },
   { id: 9, name: "Smartphone", image: "/assets/images/default-image.jpg", points: 1000 },
 ];
+
+
+const taskData = [
+  { id: 1, name: 'Matematika: Persamaan Kuadrat', points: 100, type: 'Submit', date: '2024-08-01', status: 'Perlu Review' },
+  { id: 2, name: 'Fisika: Hukum Newton', points: 150, type: 'Pengajuan', date: '2024-08-02', status: 'Diterima' },
+  { id: 3, name: 'Biologi: Sistem Peredaran Darah', points: 120, type: 'Submit', date: '2024-08-03', status: 'Ditolak' },
+];
+
+const rewardData = [
+  { id: 1, name: 'Voucher Belanja', date: '2024-08-01', status: 'Perlu Review' },
+  { id: 2, name: 'Tiket Bioskop', date: '2024-08-02', status: 'Diterima' },
+  { id: 3, name: 'Buku Pelajaran', date: '2024-08-03', status: 'Ditolak' },
+];

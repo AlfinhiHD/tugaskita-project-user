@@ -1,20 +1,45 @@
-import { useState } from 'react';
+import {
+  ProfileSiswaType,
+  ResponseDTO,
+  TaskDoneType,
+} from "@/app/_constant/global-types";
+import SiswaService from "@/app/_services/siswa-service";
+import { useEffect, useState } from "react";
+import useSWR from "swr";
 
 const useProfilSaya = () => {
-  const [user, setUser] = useState({
-    name: 'John Doe',
-    email: 'john.doe@example.com',
-    points: 1500,
-    completedTasks: 25,
-    photo: '/assets/images/default-image.jpg',
-  });
 
   const [isChangingPassword, setIsChangingPassword] = useState(false);
 
+  const {
+    data: profile,
+    error: errorProfile,
+    mutate: mutateProfile,
+    isLoading: loadingProfile,
+  } = useSWR<ResponseDTO<ProfileSiswaType>, Error>(["/user/profile"], () =>
+    SiswaService.getSiswaProfile()
+  );
+
+  const {
+    data: taskDone,
+    error: errorTaskDone,
+    mutate: mutateTaskDone,
+    isLoading: loadingTaskDone,
+  } = useSWR<TaskDoneType, Error>(["/user-task/sum-clear"], () =>
+    SiswaService.getCountTaskDone()
+  );
+
+  useEffect(() => {
+    console.log(profile)
+  })
+
   return {
-    user,
+    user: profile?.data,
+    loadingProfile,
     isChangingPassword,
     setIsChangingPassword,
+    taskDone: taskDone?.count,
+    loadingTaskDone,
   };
 };
 

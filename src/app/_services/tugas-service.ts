@@ -12,6 +12,7 @@ const getTugasDetail = async (id) => {
   return res.data;
 }
 
+
 const TugasService = {
     getTugas,
     getTugasDetail

@@ -1,5 +1,6 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
+import { User } from "lucide-react";
 
 export const StatCardSkeleton = () => (
   <Card className="bg-gradient-to-br from-gray-200 to-gray-300 shadow-lg">
@@ -115,6 +116,59 @@ export const TukarPoinPageSkeleton = () => {
             </div>
           </CardContent>
         </Card>
+      </div>
+    </div>
+  );
+};
+
+export const ProfilSayaSkeleton = () => {
+  return (
+    <div className="page-wrapper p-8 bg-gray-100 min-h-screen">
+      <h1 className="flex items-center ms-3 mt-3 font-bold text-4xl mb-8 text-blue-800 shadow-text">
+        <User className="mr-3 h-10 w-10" />
+        Profil Saya
+      </h1>
+
+      <div className="max-w-3xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
+        <div className="bg-blue-700 p-8 text-white">
+          <div className="flex flex-col md:flex-row items-center">
+            <Skeleton className="w-32 h-32 md:w-48 md:h-48 rounded-full mb-4 md:mb-0 md:mr-8" />
+            <div className="text-center md:text-left flex-grow">
+              <Skeleton className="h-8 w-48 mb-2" />
+              <div className="flex items-center justify-center md:justify-start mb-4">
+                <Skeleton className="h-5 w-5 mr-2" />
+                <Skeleton className="h-5 w-40" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="p-8">
+          <div className="grid grid-cols-2 gap-6 mb-8">
+            <Card className="bg-blue-100 p-6 rounded-lg">
+              <CardContent className="text-center">
+                <div className="flex items-center justify-center mb-2">
+                  <Skeleton className="h-6 w-6 mr-2" />
+                  <Skeleton className="h-6 w-16" />
+                </div>
+                <Skeleton className="h-8 w-16 mx-auto" />
+              </CardContent>
+            </Card>
+            <Card className="bg-green-100 p-6 rounded-lg">
+              <CardContent className="text-center">
+                <div className="flex items-center justify-center mb-2">
+                  <Skeleton className="h-6 w-6 mr-2" />
+                  <Skeleton className="h-6 w-24" />
+                </div>
+                <Skeleton className="h-8 w-16 mx-auto" />
+              </CardContent>
+            </Card>
+          </div>
+
+          <div className="flex justify-center">
+            <Skeleton className="h-12 w-40" />
+          </div>
+        </div>
       </div>
     </div>
   );

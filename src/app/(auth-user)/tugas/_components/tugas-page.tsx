@@ -23,6 +23,7 @@ import useTugas from "../_hooks/useTugas";
 import TugasCard from "./tugas-card";
 import { SkeletonTugasCard } from "@/app/_components/skeletons";
 import Image from "next/image";
+import Link from "next/link";
 
 const TugasPage = () => {
   const {
@@ -36,10 +37,10 @@ const TugasPage = () => {
     currentPage,
     setCurrentPage,
     pageCount,
-    loadingTasks
+    loadingTasks,
   } = useTugas();
 
-  console.log(currentTugas)
+  console.log(currentTugas);
 
   return (
     <div className="page-wrapper bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen p-8">
@@ -49,9 +50,11 @@ const TugasPage = () => {
             <Clipboard className="mr-3 h-10 w-10" />
             Daftar Tugas
           </h1>
-          <Button className="bg-green-500 hover:bg-green-600 text-white rounded-full px-6 py-2 flex items-center">
-            <Plus className="mr-2 h-5 w-5" /> Ajukan Tugas
-          </Button>
+          <Link href="tugas/ajukan-tugas-form" passHref>
+            <Button className="bg-green-500 hover:bg-green-600 text-white rounded-full px-6 py-2 flex items-center">
+              <Plus className="mr-2 h-5 w-5" /> Ajukan Tugas
+            </Button>
+          </Link>
         </div>
 
         <div className="bg-white shadow-xl rounded-xl overflow-hidden">
@@ -125,9 +128,11 @@ const TugasPage = () => {
           <div className="p-6">
             {loadingTasks ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {Array(6).fill(0).map((_, index) => (
-                  <SkeletonTugasCard key={index} />
-                ))}
+                {Array(6)
+                  .fill(0)
+                  .map((_, index) => (
+                    <SkeletonTugasCard key={index} />
+                  ))}
               </div>
             ) : currentTugas && currentTugas.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
