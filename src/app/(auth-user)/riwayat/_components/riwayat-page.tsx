@@ -3,8 +3,14 @@
 import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Search, Filter, Calendar } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Search, Filter, Calendar, History } from "lucide-react";
 import useRiwayat from "../_hooks/useRiwayat";
 import MainTable from "@/app/_components/main-table";
 
@@ -23,21 +29,30 @@ const RiwayatPage = () => {
     taskData,
     rewardData,
     taskColumns,
-    rewardColumns
+    rewardColumns,
   } = useRiwayat();
 
   return (
     <div className="page-wrapper bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen p-8">
       <div className="mx-auto mt-3">
-        <h1 className="font-bold text-4xl text-blue-800 mb-8">Riwayat Pengajuan Tugas dan Penukaran Reward</h1>
+        <h1 className="font-bold text-4xl text-blue-800 mb-8 flex items-center">
+          <History className="mr-3 h-10 w-10" />
+          Riwayat Pengajuan Tugas dan Penukaran Reward
+        </h1>
 
         <div className="bg-white shadow-xl rounded-md overflow-hidden">
           <Tabs value={activeTab} onValueChange={setActiveTab}>
             <TabsList className="bg-gradient-to-r from-blue-600 to-indigo-600 p-2 w-full">
-              <TabsTrigger value="tugas" className="flex-1 text-white data-[state=active]:bg-white data-[state=active]:text-blue-800">
+              <TabsTrigger
+                value="tugas"
+                className="flex-1 text-white data-[state=active]:bg-white data-[state=active]:text-blue-800"
+              >
                 Submit dan Pengajuan Tugas
               </TabsTrigger>
-              <TabsTrigger value="reward" className="flex-1 text-white data-[state=active]:bg-white data-[state=active]:text-blue-800">
+              <TabsTrigger
+                value="reward"
+                className="flex-1 text-white data-[state=active]:bg-white data-[state=active]:text-blue-800"
+              >
                 Penukaran Reward
               </TabsTrigger>
             </TabsList>
@@ -83,7 +98,11 @@ const RiwayatPage = () => {
                   <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
                 </div>
               </div>
-              <MainTable columns={taskColumns} data={taskData} searchable={false} />
+              <MainTable
+                columns={taskColumns}
+                data={taskData}
+                searchable={false}
+              />
             </TabsContent>
 
             <TabsContent value="reward" className="p-6">
@@ -118,7 +137,11 @@ const RiwayatPage = () => {
                   <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
                 </div>
               </div>
-              <MainTable columns={rewardColumns} data={rewardData} searchable={false} />
+              <MainTable
+                columns={rewardColumns}
+                data={rewardData}
+                searchable={false}
+              />
             </TabsContent>
           </Tabs>
         </div>
