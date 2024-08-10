@@ -1,34 +1,48 @@
 import { useState } from "react";
 import TaskDetailDialog from "../_components/task-detail-dialog";
+import {
+  ProfileSiswaType,
+  ResponseDTO,
+  TaskDoneType,
+  TugasType,
+} from "@/app/_constant/global-types";
+import useSWR from "swr";
+import SiswaService from "@/app/_services/siswa-service";
+import TugasService from "@/app/_services/tugas-service";
 
 const useDashboard = () => {
   const [openDialog, setOpenDialog] = useState(null);
 
-  const todaysTasks = [
-    {
-      id: 1,
-      title: "Matematika: Persamaan Kuadrat 1",
-      points: 100,
-      description: "Selesaikan 10 soal persamaan kuadrat",
-    },
-    {
-      id: 2,
-      title: "Matematika: Persamaan Kuadrat 2",
-      points: 200,
-      description: "Selesaikan 10 soal persamaan kuadrat",
-    },
-    {
-      id: 3,
-      title: "Matematika: Persamaan Kuadrat 3",
-      points: 150,
-      description: "Selesaikan 10 soal persamaan kuadrat",
-    },
-  ];
+  const {
+    data: tasks,
+    error: errorTasks,
+    mutate: mutateTasks,
+    isLoading: loadingTasks,
+  } = useSWR<ResponseDTO<TugasType[]>, Error>(["/admin-task"], () =>
+    TugasService.getTugas()
+  );
 
+  const {
+    data: profile,
+    error: errorProfile,
+    mutate: mutateProfile,
+    isLoading: loadingProfile,
+  } = useSWR<ResponseDTO<ProfileSiswaType>, Error>(["/user/profile"], () =>
+    SiswaService.getSiswaProfile()
+  );
+
+  const {
+    data: taskDone,
+    error: errorTaskDone,
+    mutate: mutateTaskDone,
+    isLoading: loadingTaskDone,
+  } = useSWR<TaskDoneType, Error>(["/user-task/sum-clear"], () =>
+    SiswaService.getCountTaskDone()
+  );
 
   const columns = [
     { key: "title", header: "Nama Task", sortable: true },
-    { key: "points", header: "Point", sortable: true },
+    { key: "point", header: "Point", sortable: true },
     {
       key: "actions",
       header: "Detail",
@@ -39,8 +53,13 @@ const useDashboard = () => {
   return {
     openDialog,
     setOpenDialog,
-    todaysTasks,
+    todaysTasks: tasks?.data,
     columns,
+    profilePoint: profile?.data?.point,
+    loadingTasks,
+    loadingProfile,
+    loadingTaskDone,
+    taskDone: taskDone?.count
   };
 };
 

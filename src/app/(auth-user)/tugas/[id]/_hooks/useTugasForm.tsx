@@ -3,7 +3,9 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useParams } from "next/navigation";
-import { TugasDetail } from "@/app/_constant/global-types";
+import { ResponseDTO, TugasDetail } from "@/app/_constant/global-types";
+import TugasService from "@/app/_services/tugas-service";
+import useSWR from "swr";
 
 const MAX_FILE_SIZE = 5000000;
 const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
@@ -26,12 +28,22 @@ export const useTugasForm = () => {
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const params = useParams();
 
-  const tugasDetail: TugasDetail = {
-    judul: "Matematika: Persamaan Kuadrat",
-    poin: 100,
-    tenggat: "2023-08-31",
-    deskripsi: "Membersihkan ruang kelas untuk menciptakan lingkungan belajar yang bersih, nyaman, dan mendukung proses belajar mengajar. Tugas ini dilakukan setiap hari sebelum pelajaran dimulai dan setelah pelajaran selesai. Setiap kali berhasil menyelesaikan tugas membersihkan kelas, siswa akan mendapatkan 200 poin."
-  };
+  const {
+    data: tasksDetail,
+    error: errorTasksDetail,
+    mutate: mutateTasksDetail,
+    isLoading: loadingTasksDetail,
+  } = useSWR<ResponseDTO<TugasDetail>, Error>(
+    params.id ? `/user-task/${params.id}` : null,
+    () => params.id ? TugasService.getTugasDetail(params.id) : null
+  );
+
+  // const tugasDetail: TugasDetail = {
+  //   judul: "Matematika: Persamaan Kuadrat",
+  //   poin: 100,
+  //   tenggat: "2023-08-31",
+  //   deskripsi: "Membersihkan ruang kelas untuk menciptakan lingkungan belajar yang bersih, nyaman, dan mendukung proses belajar mengajar. Tugas ini dilakukan setiap hari sebelum pelajaran dimulai dan setelah pelajaran selesai. Setiap kali berhasil menyelesaikan tugas membersihkan kelas, siswa akan mendapatkan 200 poin."
+  // };
 
   const form = useForm<SubmitTugasFormValues>({
     resolver: zodResolver(submitTugasSchema),
@@ -42,7 +54,6 @@ export const useTugasForm = () => {
 
   const onSubmit = (data: SubmitTugasFormValues) => {
     console.log(data);
-    // Implementasi logika submit
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -63,6 +74,7 @@ export const useTugasForm = () => {
     previewImage,
     onSubmit,
     handleImageChange,
-    tugasDetail,
+    tugasDetail: tasksDetail?.data,
+    loadingTasksDetail
   };
 };

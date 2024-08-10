@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/dialog";
 
 const TukarPoinDialog = ({ reward, userPoints, onExchange }) => {
-  const isPointsSufficient = userPoints >= reward.points;
+  const isPointsSufficient = userPoints >= reward.Price;
 
   return (
     <Dialog>
@@ -21,7 +21,7 @@ const TukarPoinDialog = ({ reward, userPoints, onExchange }) => {
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle className="text-white">Tukar {reward.name}</DialogTitle>
+          <DialogTitle className="text-white">Tukar {reward.Name}</DialogTitle>
           <DialogDescription className="text-blue-200">
             Apakah Anda yakin ingin menukar poin Anda dengan reward ini?
           </DialogDescription>
@@ -33,7 +33,7 @@ const TukarPoinDialog = ({ reward, userPoints, onExchange }) => {
           </div>
           <div className="flex justify-between items-center mb-4">
             <span className="font-semibold">Poin Dibutuhkan</span>
-            <span className="text-2xl font-bold">{reward.points}</span>
+            <span className="text-2xl font-bold">{reward.Price}</span>
           </div>
           {isPointsSufficient ? (
             <div className="bg-green-100 border-l-4 border-green-500 p-4 mt-4">
@@ -41,7 +41,7 @@ const TukarPoinDialog = ({ reward, userPoints, onExchange }) => {
                 Poin Anda cukup! Sisa poin setelah penukaran:
               </p>
               <p className="text-2xl font-bold text-green-800">
-                {userPoints - reward.points} poin
+                {userPoints - reward.Price} poin
               </p>
             </div>
           ) : (
@@ -50,7 +50,7 @@ const TukarPoinDialog = ({ reward, userPoints, onExchange }) => {
                 Poin Anda tidak mencukupi untuk menukar reward ini.
               </p>
               <p className="text-2xl font-bold text-red-800">
-                Kurang {reward.points - userPoints} poin
+                Kurang {reward.Price - userPoints} poin
               </p>
             </div>
           )}

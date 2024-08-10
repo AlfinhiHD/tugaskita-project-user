@@ -1,4 +1,7 @@
+import { ResponseDTO, TugasType } from "@/app/_constant/global-types";
+import TugasService from "@/app/_services/tugas-service";
 import { useState, useEffect } from "react";
+import useSWR from "swr";
 
 const useTugas = () => {
   const [search, setSearch] = useState("");
@@ -8,86 +11,33 @@ const useTugas = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
 
-  const tugasList = [
-    {
-      id: 1,
-      name: "Matematika: Persamaan Kuadrat",
-      description:
-        "Selesaikan 10 soal persamaan kuadrat yang telah disediakan. Jelaskan langkah-langkah penyelesaian dengan detail. Selesaikan 10 soal persamaan kuadrat yang telah disediakan. Jelaskan langkah-langkah penyelesaian dengan detail. Selesaikan 10 soal persamaan kuadrat yang telah disediakan. Jelaskan langkah-langkah penyelesaian dengan detail. Selesaikan 10 soal persamaan kuadrat yang telah disediakan. Jelaskan langkah-langkah penyelesaian dengan detail. Selesaikan 10 soal persamaan kuadrat yang telah disediakan. Jelaskan langkah-langkah penyelesaian dengan detail.",
-      endDate: "2024-08-15",
-      points: 200,
-    },
-    {
-      id: 2,
-      name: "Bahasa Inggris: Essay Writing",
-      description:
-        "Tulis sebuah esai dalam bahasa Inggris dengan tema 'The Impact of Technology on Education' sepanjang 500 kata.",
-      endDate: "2024-08-20",
-      points: 300,
-    },
-    {
-      id: 3,
-      name: "Matematika: Persamaan Kuadrat",
-      description:
-        "Selesaikan 10 soal persamaan kuadrat yang telah disediakan. Jelaskan langkah-langkah penyelesaian dengan detail. Selesaikan 10 soal persamaan kuadrat yang telah disediakan. Jelaskan langkah-langkah penyelesaian dengan detail. Selesaikan 10 soal persamaan kuadrat yang telah disediakan. Jelaskan langkah-langkah penyelesaian dengan detail. Selesaikan 10 soal persamaan kuadrat yang telah disediakan. Jelaskan langkah-langkah penyelesaian dengan detail. Selesaikan 10 soal persamaan kuadrat yang telah disediakan. Jelaskan langkah-langkah penyelesaian dengan detail.",
-      endDate: "2024-08-15",
-      points: 200,
-    },
-    {
-      id: 4,
-      name: "Bahasa Inggris: Essay Writing",
-      description:
-        "Tulis sebuah esai dalam bahasa Inggris dengan tema 'The Impact of Technology on Education' sepanjang 500 kata.",
-      endDate: "2024-08-20",
-      points: 600,
-    },
-    {
-      id: 5,
-      name: "Matematika: Persamaan Kuadrat",
-      description:
-        "Selesaikan 10 soal persamaan kuadrat yang telah disediakan. Jelaskan langkah-langkah penyelesaian dengan detail. Selesaikan 10 soal persamaan kuadrat yang telah disediakan. Jelaskan langkah-langkah penyelesaian dengan detail. Selesaikan 10 soal persamaan kuadrat yang telah disediakan. Jelaskan langkah-langkah penyelesaian dengan detail. Selesaikan 10 soal persamaan kuadrat yang telah disediakan. Jelaskan langkah-langkah penyelesaian dengan detail. Selesaikan 10 soal persamaan kuadrat yang telah disediakan. Jelaskan langkah-langkah penyelesaian dengan detail.",
-      endDate: "2024-08-15",
-      points: 200,
-    },
-    {
-      id: 6,
-      name: "Bahasa Inggris: Essay Writing",
-      description:
-        "Tulis sebuah esai dalam bahasa Inggris dengan tema 'The Impact of Technology on Education' sepanjang 500 kata.",
-      endDate: "2024-08-20",
-      points: 600,
-    },
-    {
-      id: 7,
-      name: "Matematika: Persamaan Kuadrat",
-      description:
-        "Selesaikan 10 soal persamaan kuadrat yang telah disediakan. Jelaskan langkah-langkah penyelesaian dengan detail. Selesaikan 10 soal persamaan kuadrat yang telah disediakan. Jelaskan langkah-langkah penyelesaian dengan detail. Selesaikan 10 soal persamaan kuadrat yang telah disediakan. Jelaskan langkah-langkah penyelesaian dengan detail. Selesaikan 10 soal persamaan kuadrat yang telah disediakan. Jelaskan langkah-langkah penyelesaian dengan detail. Selesaikan 10 soal persamaan kuadrat yang telah disediakan. Jelaskan langkah-langkah penyelesaian dengan detail.",
-      endDate: "2024-08-15",
-      points: 200,
-    },
-    {
-      id: 8,
-      name: "Bahasa Inggris: Essay Writing",
-      description:
-        "Tulis sebuah esai dalam bahasa Inggris dengan tema 'The Impact of Technology on Education' sepanjang 500 kata.",
-      endDate: "2024-08-20",
-      points: 600,
-    },
-  ];
+  const {
+    data: tasks,
+    error: errorTasks,
+    mutate: mutateTasks,
+    isLoading: loadingTasks,
+  } = useSWR<ResponseDTO<TugasType[]>, Error>(["/admin-task"], () =>
+    TugasService.getTugas()
+  );
 
   useEffect(() => {
-    const filtered = tugasList.filter((tugas) => {
-      const matchSearch = tugas.name
+    setFilteredTugas(tasks?.data)
+  }, [tasks])
+
+ 
+  useEffect(() => {
+    const filtered = tasks?.data?.filter((tugas) => {
+      const matchSearch = tugas.title
         .toLowerCase()
         .includes(search.toLowerCase());
       const matchPoints =
         pointRange === "semua"
           ? true
           : pointRange === "1001+"
-          ? tugas.points > 1000
+          ? tugas.point > 1000
           : pointRange === "501-1000"
-          ? tugas.points >= 501 && tugas.points <= 1000
-          : tugas.points >= 100 && tugas.points <= 500;
+          ? tugas.point >= 501 && tugas.point <= 1000
+          : tugas.point >= 100 && tugas.point <= 500;
       const matchDate =
         !endDate || new Date(tugas.endDate) <= new Date(endDate);
       return matchSearch && matchPoints && matchDate;
@@ -96,8 +46,8 @@ const useTugas = () => {
     setCurrentPage(1);
   }, [search, pointRange, endDate]);
 
-  const pageCount = Math.ceil(filteredTugas.length / itemsPerPage);
-  const currentTugas = filteredTugas.slice(
+  const pageCount = Math.ceil(filteredTugas?.length / itemsPerPage);
+  const currentTugas = filteredTugas?.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
@@ -113,6 +63,7 @@ const useTugas = () => {
     currentPage,
     setCurrentPage,
     pageCount,
+    loadingTasks
   };
 };
 

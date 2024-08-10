@@ -16,10 +16,21 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
 import { useTugasForm } from "../_hooks/useTugasForm";
 import { ClipboardList, ImageIcon, Calendar, Clock } from "lucide-react";
+import { FormSubmitTugasSkeleton } from "@/app/_components/skeletons";
 
 const FormSubmitTugas = () => {
-  const { form, previewImage, onSubmit, handleImageChange, tugasDetail } =
-    useTugasForm();
+  const {
+    form,
+    previewImage,
+    onSubmit,
+    handleImageChange,
+    tugasDetail,
+    loadingTasksDetail,
+  } = useTugasForm();
+
+  if (loadingTasksDetail) {
+    return <FormSubmitTugasSkeleton />;
+  }
 
   return (
     <div className="page-wrapper bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen p-8">
@@ -33,24 +44,24 @@ const FormSubmitTugas = () => {
             <div className="flex items-center space-x-4">
               <ClipboardList className="w-12 h-12 bg-white text-blue-600 p-2 rounded-full" />
               <div>
-                <p className="text-2xl font-bold">{tugasDetail.judul}</p>
+                <p className="text-2xl font-bold">{tugasDetail.title}</p>
                 <div className="flex items-center mt-2 text-blue-200">
                   <Calendar className="w-4 h-4 mr-2" />
-                  <span className="mr-4">Tenggat: {tugasDetail.tenggat}</span>
+                  <span className="mr-4">Tenggat: {tugasDetail.endDate}</span>
                   <Clock className="w-4 h-4 mr-2" />
                   <span>23:59 WIB</span>
                 </div>
               </div>
             </div>
             <span className="text-white bg-green-500 px-4 py-2 text-xl rounded-full font-bold shadow-lg">
-              {tugasDetail.poin} poin
+              {tugasDetail.point} poin
             </span>
           </CardTitle>
         </CardHeader>
         <CardContent className="p-6">
           <div className="bg-blue-50 p-4 rounded-lg mb-6">
             <p className="font-semibold text-blue-800 mb-2">Deskripsi Tugas:</p>
-            <p className="text-gray-700">{tugasDetail.deskripsi}</p>
+            <p className="text-gray-700">{tugasDetail.description}</p>
           </div>
 
           <Form {...form}>

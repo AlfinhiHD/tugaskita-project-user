@@ -3,7 +3,15 @@
 import React from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Plus, Search, Filter, Calendar, ChevronLeft, ChevronRight, Clipboard } from "lucide-react";
+import {
+  Plus,
+  Search,
+  Filter,
+  Calendar,
+  ChevronLeft,
+  ChevronRight,
+  Clipboard,
+} from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -13,6 +21,8 @@ import {
 } from "@/components/ui/select";
 import useTugas from "../_hooks/useTugas";
 import TugasCard from "./tugas-card";
+import { SkeletonTugasCard } from "@/app/_components/skeletons";
+import Image from "next/image";
 
 const TugasPage = () => {
   const {
@@ -26,7 +36,10 @@ const TugasPage = () => {
     currentPage,
     setCurrentPage,
     pageCount,
+    loadingTasks
   } = useTugas();
+
+  console.log(currentTugas)
 
   return (
     <div className="page-wrapper bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen p-8">
@@ -83,7 +96,9 @@ const TugasPage = () => {
                 <div className="flex items-center space-x-2 bg-white bg-opacity-20 rounded-full p-1">
                   <Button
                     className="rounded-full w-10 h-10 p-0"
-                    onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                    onClick={() =>
+                      setCurrentPage((prev) => Math.max(prev - 1, 1))
+                    }
                     disabled={currentPage === 1}
                     variant="ghost"
                   >
@@ -94,7 +109,9 @@ const TugasPage = () => {
                   </span>
                   <Button
                     className="rounded-full w-10 h-10 p-0"
-                    onClick={() => setCurrentPage((prev) => Math.min(prev + 1, pageCount))}
+                    onClick={() =>
+                      setCurrentPage((prev) => Math.min(prev + 1, pageCount))
+                    }
                     disabled={currentPage === pageCount}
                     variant="ghost"
                   >
@@ -106,11 +123,31 @@ const TugasPage = () => {
           </div>
 
           <div className="p-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {currentTugas.map((tugas) => (
-                <TugasCard key={tugas.id} tugas={tugas} />
-              ))}
-            </div>
+            {loadingTasks ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {Array(6).fill(0).map((_, index) => (
+                  <SkeletonTugasCard key={index} />
+                ))}
+              </div>
+            ) : currentTugas && currentTugas.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {currentTugas.map((tugas) => (
+                  <TugasCard key={tugas.id} tugas={tugas} />
+                ))}
+              </div>
+            ) : (
+              <div className="flex flex-col items-center justify-center py-8">
+                <Image
+                  src="/assets/images/zerodata.jpg"
+                  alt="Data tidak tersedia"
+                  width={300}
+                  height={300}
+                />
+                <p className="mt-4 text-lg font-medium text-gray-600">
+                  Maaf, data tidak tersedia.
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </div>

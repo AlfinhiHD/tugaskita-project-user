@@ -13,6 +13,8 @@ import {
 import { Search, Filter, ChevronLeft, ChevronRight, Gift } from "lucide-react";
 import useTukarPoin from "../_hooks/useTukarPoin";
 import RewardCard from "./tukar-poin-card";
+import { TukarPoinPageSkeleton } from "@/app/_components/skeletons";
+import Image from "next/image";
 
 const TukarPoinPage = () => {
   const {
@@ -25,11 +27,17 @@ const TukarPoinPage = () => {
     currentRewards,
     pageCount,
     userPoints,
+    loadingrReward,
+    loadingProfile
   } = useTukarPoin();
 
   const handleExchange = (reward) => {
     console.log("Reward ditukar:", reward);
   };
+
+  if (loadingrReward && loadingProfile) {
+    return <TukarPoinPageSkeleton />;
+  }
 
   return (
     <div className="page-wrapper bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen p-8">
@@ -79,7 +87,9 @@ const TukarPoinPage = () => {
                 <div className="flex items-center space-x-2 bg-white bg-opacity-20 rounded-full p-1">
                   <Button
                     className="rounded-full w-10 h-10 p-0"
-                    onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                    onClick={() =>
+                      setCurrentPage((prev) => Math.max(prev - 1, 1))
+                    }
                     disabled={currentPage === 1}
                     variant="ghost"
                   >
@@ -90,7 +100,9 @@ const TukarPoinPage = () => {
                   </span>
                   <Button
                     className="rounded-full w-10 h-10 p-0"
-                    onClick={() => setCurrentPage((prev) => Math.min(prev + 1, pageCount))}
+                    onClick={() =>
+                      setCurrentPage((prev) => Math.min(prev + 1, pageCount))
+                    }
                     disabled={currentPage === pageCount}
                     variant="ghost"
                   >
@@ -102,16 +114,30 @@ const TukarPoinPage = () => {
           </div>
 
           <div className="p-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {currentRewards.map((reward) => (
-                <RewardCard
-                  key={reward.id}
-                  reward={reward}
-                  userPoints={userPoints}
-                  onExchange={handleExchange}
+            {currentRewards && currentRewards.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {currentRewards.map((reward) => (
+                  <RewardCard
+                    key={reward.id}
+                    reward={reward}
+                    userPoints={userPoints}
+                    onExchange={handleExchange}
+                  />
+                ))}
+              </div>
+            ) : (
+              <div className="flex flex-col items-center justify-center py-8">
+                <Image
+                  src="/assets/images/zerodata.jpg"
+                  alt="Data tidak tersedia"
+                  width={300}
+                  height={300}
                 />
-              ))}
-            </div>
+                <p className="mt-4 text-lg font-medium text-gray-600">
+                  Maaf, data tidak tersedia.
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </div>

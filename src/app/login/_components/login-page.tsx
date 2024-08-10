@@ -18,6 +18,9 @@ import * as z from "zod";
 import { Input } from "@/components/ui/input";
 import { Eye, EyeOff } from "lucide-react";
 import { LoginValue } from "@/app/_constant/global-types";
+import instance from "@/app/_utils/axios.instance";
+import { useAuth } from "@/app/_hooks/useAuth";
+import Swal from "sweetalert2";
 
 const formSchema = z.object({
   email: z
@@ -32,6 +35,10 @@ const formSchema = z.object({
 });
 
 export default function LoginPage() {
+  const [authError, setAuthError] = React.useState("");
+  const auth = useAuth();
+  const { login } = auth;
+
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -43,9 +50,24 @@ export default function LoginPage() {
 
   const [showPassword, setShowPassword] = React.useState(false);
 
-  function onSubmit(values: LoginValue) {
+  const onSubmit = async (values: LoginValue) => {
     console.log(values);
-  }
+    const { email, password } = values;
+    try {
+      const response = await instance.post("/user/login", {
+        email,
+        password,
+      });
+      if (response.data.token) {
+        login(response.data.token);
+        Swal.fire("Success", "Berhasil login", "success");
+      } else {
+        setAuthError("Email atau password ada yang salah!");
+      }
+    } catch (error) {
+      setAuthError("Email atau password ada yang salah!");
+    }
+  };
 
   return (
     <div className="min-h-screen flex flex-col md:flex-row">
@@ -141,6 +163,7 @@ export default function LoginPage() {
                   </FormItem>
                 )}
               />
+              {authError && <p className="text-red-500 text-sm">{authError}</p>}
               <Button type="submit" className="w-full" variant="default">
                 Log In
               </Button>
