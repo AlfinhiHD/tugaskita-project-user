@@ -173,3 +173,25 @@ export const ProfilSayaSkeleton = () => {
     </div>
   );
 };
+
+export const RiwayatPageSkeleton = () => {
+  return (
+    <div className="page-wrapper bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen p-8">
+      <div className="mx-auto mt-3">
+        <Skeleton className="h-12 w-96 mb-8" />
+        <div className="bg-white shadow-xl rounded-md overflow-hidden">
+          <Skeleton className="h-12 w-full" />
+          <div className="p-6">
+            <div className="flex flex-wrap items-center gap-4 mb-6">
+              <Skeleton className="h-10 w-64 rounded-full" />
+              <Skeleton className="h-10 w-48 rounded-full" />
+              <Skeleton className="h-10 w-48 rounded-full" />
+              <Skeleton className="h-10 w-48 rounded-full" />
+            </div>
+            <Skeleton className="h-64 w-full" />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};

@@ -13,6 +13,8 @@ import {
 import { Search, Filter, Calendar, History } from "lucide-react";
 import useRiwayat from "../_hooks/useRiwayat";
 import MainTable from "@/app/_components/main-table";
+import { RiwayatPageSkeleton } from "@/app/_components/skeletons";
+import Image from "next/image";
 
 const RiwayatPage = () => {
   const {
@@ -30,7 +32,31 @@ const RiwayatPage = () => {
     rewardData,
     taskColumns,
     rewardColumns,
+    isLoading,
+    error,
   } = useRiwayat();
+
+  if (isLoading) {
+    return <RiwayatPageSkeleton />;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
+  const renderZeroData = () => (
+    <div className="flex flex-col items-center justify-center py-8">
+      <Image
+        src="/assets/images/zerodata.jpg"
+        alt="Data tidak tersedia"
+        width={300}
+        height={300}
+      />
+      <p className="mt-4 text-lg font-medium text-gray-600">
+        Maaf, data tidak tersedia.
+      </p>
+    </div>
+  );
 
   return (
     <div className="page-wrapper bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen p-8">
@@ -98,11 +124,15 @@ const RiwayatPage = () => {
                   <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
                 </div>
               </div>
-              <MainTable
-                columns={taskColumns}
-                data={taskData}
-                searchable={false}
-              />
+              {taskData.length > 0 ? (
+                <MainTable
+                  columns={taskColumns}
+                  data={taskData}
+                  searchable={false}
+                />
+              ) : (
+                renderZeroData()
+              )}
             </TabsContent>
 
             <TabsContent value="reward" className="p-6">
@@ -137,11 +167,15 @@ const RiwayatPage = () => {
                   <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
                 </div>
               </div>
-              <MainTable
-                columns={rewardColumns}
-                data={rewardData}
-                searchable={false}
-              />
+              {rewardData.length > 0 ? (
+                <MainTable
+                  columns={rewardColumns}
+                  data={rewardData}
+                  searchable={false}
+                />
+              ) : (
+                renderZeroData()
+              )}
             </TabsContent>
           </Tabs>
         </div>

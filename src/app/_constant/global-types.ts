@@ -52,3 +52,26 @@ export type RewardType = {
   Price: number;
   Image: string
 }
+
+export type RiwayatUploadAndRequestTaskType = {
+  Id: string;
+  TaskId: string;
+  TaskName: string;
+  UserId: string;
+  UserName: string;
+  Image: string;
+  Description: string;
+  Status: string;
+  Type: string;
+  Timestamp: string;
+}
+
+export type RiwayatReward = {
+  Id: string;
+  RewardId: string;
+  RewardName: string;
+  UserId: string;
+  Status: string;
+  Timestamp: string
+}
+

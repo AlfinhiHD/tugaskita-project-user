@@ -12,10 +12,24 @@ const getTugasDetail = async (id) => {
   return res.data;
 }
 
+const getUploadTaskHistory = async () => {
+  const res = await instance.get("/user-task/riwayat")
+
+  return res.data
+}
+
+const getRequestTaskHistory = async () => {
+  const res = await instance.get("/user-task/req-riwayat")
+
+  return res.data
+}
+
 
 const TugasService = {
     getTugas,
-    getTugasDetail
+    getTugasDetail,
+    getUploadTaskHistory,
+    getRequestTaskHistory
 };
 
 export default TugasService

@@ -6,8 +6,15 @@ const getReward = async () => {
   return res.data;
 };
 
+const getRewardHistory = async () => {
+  const res = await instance.get("/user-reward/history")
+
+  return res.data
+}
+
 const RewardService = {
   getReward,
+  getRewardHistory
 };
 
 export default RewardService;

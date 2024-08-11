@@ -110,3 +110,41 @@ const rewardData = [
   { id: 2, name: 'Tiket Bioskop', date: '2024-08-02', status: 'Diterima' },
   { id: 3, name: 'Buku Pelajaran', date: '2024-08-03', status: 'Ditolak' },
 ];
+
+const taskData1 = [
+  {
+    id: 1,
+    name: "Matematika: Persamaan Kuadrat",
+    points: 100,
+    type: "Submit",
+    date: "2024-08-01",
+    status: "Perlu Review",
+  },
+  {
+    id: 2,
+    name: "Fisika: Hukum Newton",
+    points: 150,
+    type: "Pengajuan",
+    date: "2024-08-02",
+    status: "Diterima",
+  },
+  {
+    id: 3,
+    name: "Biologi: Sistem Peredaran Darah",
+    points: 120,
+    type: "Submit",
+    date: "2024-08-03",
+    status: "Ditolak",
+  },
+];
+
+const rewardData2 = [
+  {
+    id: 1,
+    name: "Voucher Belanja",
+    date: "2024-08-01",
+    status: "Perlu Review",
+  },
+  { id: 2, name: "Tiket Bioskop", date: "2024-08-02", status: "Diterima" },
+  { id: 3, name: "Buku Pelajaran", date: "2024-08-03", status: "Ditolak" },
+];
