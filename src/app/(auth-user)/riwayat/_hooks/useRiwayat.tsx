@@ -14,6 +14,13 @@ const useRiwayat = () => {
   const [statusFilter, setStatusFilter] = useState("semua");
   const [typeFilter, setTypeFilter] = useState("semua");
   const [dateFilter, setDateFilter] = useState("");
+  const [formattedUploadTask, setFormattedUploadTask] = useState<RiwayatUploadAndRequestTaskType[]>([]);
+  const [formattedRequestTask, setFormattedRequestTask] = useState<RiwayatUploadAndRequestTaskType[]>([]);
+  const [formattedReward, setFormattedReward] = useState<RiwayatReward[]>([]);
+
+  const formatDate = (dateString: string) => {
+    return dateString.substring(0, 10);
+  };
 
   const {
     data: riwayatUploadTask,
@@ -45,33 +52,60 @@ const useRiwayat = () => {
     () => RewardService.getRewardHistory()
   );
 
+  useEffect(() => {
+    if (riwayatUploadTask?.data) {
+      setFormattedUploadTask(riwayatUploadTask.data.map(task => ({
+        ...task,
+        CreatedAt: formatDate(task.CreatedAt)
+      })));
+    }
+  }, [riwayatUploadTask]);
+
+  useEffect(() => {
+    if (riwayatRequestTask?.data) {
+      setFormattedRequestTask(riwayatRequestTask.data.map(task => ({
+        ...task,
+        CreatedAt: formatDate(task.CreatedAt)
+      })));
+    }
+  }, [riwayatRequestTask]);
+
+  useEffect(() => {
+    if (riwayatReward?.data) {
+      setFormattedReward(riwayatReward.data.map(reward => ({
+        ...reward,
+        CreatedAt: formatDate(reward.CreatedAt)
+      })));
+    }
+  }, [riwayatReward]);
+
   const filteredTaskData = useMemo(() => {
-    const allTasks = [...(riwayatUploadTask?.data || []), ...(riwayatRequestTask?.data || [])];
+    const allTasks = [...formattedUploadTask, ...formattedRequestTask];
     
     return allTasks.filter((task) => {
       const matchSearch = task.TaskName.toLowerCase().includes(searchTerm.toLowerCase());
       const matchStatus = statusFilter === "semua" || task.Status === statusFilter;
       const matchType = typeFilter === "semua" || task.Type === typeFilter;
-      const matchDate = !dateFilter || task.Timestamp.startsWith(dateFilter);
-
+      const matchDate = !dateFilter || task.CreatedAt === dateFilter;
+  
       return matchSearch && matchStatus && matchType && matchDate;
     });
-  }, [riwayatUploadTask, riwayatRequestTask, searchTerm, statusFilter, typeFilter, dateFilter]);
-
+  }, [formattedUploadTask, formattedRequestTask, searchTerm, statusFilter, typeFilter, dateFilter]);
+  
   const filteredRewardData = useMemo(() => {
-    return (riwayatReward?.data || []).filter((reward) => {
+    return formattedReward.filter((reward) => {
       const matchSearch = reward.RewardName.toLowerCase().includes(searchTerm.toLowerCase());
       const matchStatus = statusFilter === "semua" || reward.Status === statusFilter;
-      const matchDate = !dateFilter || reward.Timestamp.startsWith(dateFilter);
-
+      const matchDate = !dateFilter || reward.CreatedAt === dateFilter;
+  
       return matchSearch && matchStatus && matchDate;
     });
-  }, [riwayatReward, searchTerm, statusFilter, dateFilter]);
+  }, [formattedReward, searchTerm, statusFilter, dateFilter]);
 
   const taskColumns = [
     { key: "TaskName", header: "Nama Task", sortable: true },
     { key: "Type", header: "Type", sortable: true },
-    { key: "Timestamp", header: "Tanggal", sortable: true },
+    { key: "CreatedAt", header: "Tanggal", sortable: true },
     {
       key: "Status",
       header: "Status",
@@ -92,10 +126,10 @@ const useRiwayat = () => {
       ),
     },
   ];
-
+  
   const rewardColumns = [
     { key: "RewardName", header: "Nama Reward", sortable: true },
-    { key: "Timestamp", header: "Tanggal Penukaran", sortable: true },
+    { key: "CreatedAt", header: "Tanggal Penukaran", sortable: true },
     {
       key: "Status",
       header: "Status",

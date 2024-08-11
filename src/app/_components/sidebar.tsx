@@ -72,12 +72,6 @@ const Sidebar = () => {
           <Image src="/assets/logo/logo-tugaskita.png" alt="TugasKita logo" width={40} height={40} />
           <h1 className="text-2xl font-bold ml-2">TugasKita</h1>
         </div>
-
-        <div className="mb-4">
-          <p className="text-md">
-            Halo, <b>Admin 1</b>
-          </p>
-        </div>
       </div>
 
       <nav className="flex-grow overflow-y-auto">

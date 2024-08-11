@@ -63,7 +63,8 @@ export type RiwayatUploadAndRequestTaskType = {
   Description: string;
   Status: string;
   Type: string;
-  Timestamp: string;
+  CreatedAt: string;
+  UpdatedAt: string;
 }
 
 export type RiwayatReward = {
@@ -72,6 +73,7 @@ export type RiwayatReward = {
   RewardName: string;
   UserId: string;
   Status: string;
-  Timestamp: string
+  CreatedAt: string;
+  UpdatedAt: string;
 }
 
