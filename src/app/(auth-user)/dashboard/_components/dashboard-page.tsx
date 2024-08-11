@@ -63,7 +63,7 @@ const Dashboard = () => {
           <CardHeader className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-6">
             <CardTitle className="text-2xl font-bold flex items-center">
               <ClipboardList className="w-8 h-8 mr-3" />
-              Tugas Hari Ini
+              Tugas Tersedia
             </CardTitle>
           </CardHeader>
           <CardContent className="p-6">
