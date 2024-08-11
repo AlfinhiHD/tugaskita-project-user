@@ -31,10 +31,4 @@ export const navigationItems = [
     path: "/profil-saya",
     id: "profil",
   },
-  {
-    icon: LogOut,
-    label: "Logout",
-    path: "/logout",
-    id: "logout",
-  },
 ];
