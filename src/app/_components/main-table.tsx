@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useMemo, useEffect, useRef } from "react";
 import {
   Table,
   TableBody,
@@ -18,6 +18,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 import Image from "next/image";
+import ScrollIndicator from "./scroll-indicator";
 
 const MainTable = ({
   columns,
@@ -28,6 +29,23 @@ const MainTable = ({
   const [searchTerm, setSearchTerm] = useState("");
   const [sortConfig, setSortConfig] = useState({ key: null, direction: null });
   const [currentPage, setCurrentPage] = useState(1);
+
+  const tableRef = useRef(null);
+  const [isScrollable, setIsScrollable] = useState(false);
+
+  useEffect(() => {
+    const checkScrollable = () => {
+      if (tableRef.current) {
+        setIsScrollable(tableRef.current.scrollWidth > tableRef.current.clientWidth);
+      }
+    };
+
+    checkScrollable();
+    window.addEventListener('resize', checkScrollable);
+
+    return () => window.removeEventListener('resize', checkScrollable);
+  }, [data]);
+
 
   const sortedAndFilteredData = useMemo(() => {
     let filteredData = searchable
@@ -98,60 +116,68 @@ const MainTable = ({
         </div>
       )}
 
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>No</TableHead>
-            {columns.map((column) => (
-              <TableHead
-                key={column.key}
-                onClick={() => column.sortable && handleSort(column.key)}
-                className={column.sortable ? "cursor-pointer" : ""}
-              >
-                <div className="flex items-center justify-between">
-                  {column.header}
-                  {column.sortable && renderSortIcon(column.key)}
-                </div>
-              </TableHead>
-            ))}
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {data.length === 0 || sortedAndFilteredData.length === 0 ? (
+      <div className="relative overflow-x-auto" ref={tableRef}>
+        <Table>
+          <TableHeader>
             <TableRow>
-              <TableCell colSpan={columns.length + 1} className="text-center">
-                <div className="flex flex-col items-center justify-center py-8">
-                  <Image
-                    src="/assets/images/zerodata.jpg"
-                    alt="Data tidak tersedia"
-                    width={300}
-                    height={300}
-                  />
-                  <p className="mt-4 text-lg font-medium text-gray-600">
-                    Maaf, data tidak tersedia.
-                  </p>
-                </div>
-              </TableCell>
+              <TableHead className="w-[50px]">No</TableHead>
+              {columns.map((column) => (
+                <TableHead
+                  key={column.key}
+                  onClick={() => column.sortable && handleSort(column.key)}
+                  className={`${column.sortable ? "cursor-pointer" : ""} ${
+                    column.className || ""
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    {column.header}
+                    {column.sortable && renderSortIcon(column.key)}
+                  </div>
+                </TableHead>
+              ))}
             </TableRow>
-          ) : (
-            paginatedData.map((item, index) => (
-              <TableRow key={item.id || index}>
-                <TableCell>
-                  {(currentPage - 1) * itemsPerPage + index + 1}
+          </TableHeader>
+          <TableBody>
+            {data.length === 0 || sortedAndFilteredData.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={columns.length + 1} className="text-center">
+                  <div className="flex flex-col items-center justify-center py-8">
+                    <Image
+                      src="/assets/images/zerodata.jpg"
+                      alt="Data tidak tersedia"
+                      width={300}
+                      height={300}
+                    />
+                    <p className="mt-4 text-lg font-medium text-gray-600">
+                      Maaf, data tidak tersedia.
+                    </p>
+                  </div>
                 </TableCell>
-                {columns.map((column) => (
-                  <TableCell key={column.key}>
-                    {column.render ? column.render(item) : item[column.key]}
-                  </TableCell>
-                ))}
               </TableRow>
-            ))
-          )}
-        </TableBody>
-      </Table>
+            ) : (
+              paginatedData.map((item, index) => (
+                <TableRow key={item.id || index}>
+                  <TableCell className="font-medium">
+                    {(currentPage - 1) * itemsPerPage + index + 1}
+                  </TableCell>
+                  {columns.map((column) => (
+                    <TableCell
+                      key={column.key}
+                      className={column.className || ""}
+                    >
+                      {column.render ? column.render(item) : item[column.key]}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))
+            )}
+          </TableBody>
+        </Table>
+        {isScrollable && <ScrollIndicator />}
+      </div>
 
       {data.length !== 0 && sortedAndFilteredData.length !== 0 && (
-        <div className="flex items-center justify-between mt-4">
+        <div className="flex flex-col sm:flex-row items-center justify-between mt-4 space-y-2 sm:space-y-0">
           <div className="text-sm font-medium">
             Menampilkan {(currentPage - 1) * itemsPerPage + 1} -{" "}
             {Math.min(currentPage * itemsPerPage, sortedAndFilteredData.length)}{" "}

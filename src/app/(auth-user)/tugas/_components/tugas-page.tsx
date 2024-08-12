@@ -43,7 +43,7 @@ const TugasPage = () => {
   console.log(currentTugas);
 
   return (
-    <div className="page-wrapper bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen p-8">
+    <div className="page-wrapper bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen p-0 md:p-8">
       <div className="max-w-7xl mx-auto mt-3">
         <div className="flex justify-between items-center mb-8">
           <h1 className="font-bold text-4xl text-blue-800 flex items-center">
