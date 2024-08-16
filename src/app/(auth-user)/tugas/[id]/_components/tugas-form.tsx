@@ -34,46 +34,57 @@ const FormSubmitTugas = () => {
   }
 
   return (
-    <div className="page-wrapper bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen p-8">
-      <h1 className="font-bold text-4xl mb-8 mt-3 text-center text-blue-800 shadow-text">
+    <div className="page-wrapper bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen p-4 sm:p-8">
+      <h1 className="font-bold text-xl sm:text-2xl md:text-4xl mb-6 sm:mb-8 mt-3 text-center text-blue-800 shadow-text">
         Form Submit Tugas
       </h1>
 
       <Card className="bg-white shadow-xl rounded-xl overflow-hidden max-w-5xl mx-auto">
-        <CardHeader className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-6">
-          <CardTitle className="flex justify-between items-center">
+        <CardHeader className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-4 sm:p-6">
+          <CardTitle className="flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-4 sm:space-y-0">
             <div className="flex items-center space-x-4">
-              <ClipboardList className="w-12 h-12 bg-white text-blue-600 p-2 rounded-full" />
+              <ClipboardList className="w-10 h-10 sm:w-12 sm:h-12 bg-white text-blue-600 p-2 rounded-full" />
               <div>
-                <p className="text-2xl font-bold">{tugasDetail.title}</p>
-                <div className="flex items-center mt-2 text-blue-200">
-                  <Calendar className="w-4 h-4 mr-2" />
-                  <span className="mr-4">Tenggat: {tugasDetail.endDate}</span>
-                  <Clock className="w-4 h-4 mr-2" />
-                  <span>23:59 WIB</span>
+                <p className="text-lg sm:text-2xl font-bold">
+                  {tugasDetail.title}
+                </p>
+                <div className="flex flex-col sm:flex-row items-start sm:items-center mt-2 text-blue-200 text-sm sm:text-base">
+                  <div className="flex items-center mb-1 sm:mb-0 sm:mr-4">
+                    <Calendar className="w-4 h-4 mr-2" />
+                    <span>Tenggat: {tugasDetail.endDate}</span>
+                  </div>
+                  <div className="flex items-center">
+                    <Clock className="w-4 h-4 mr-2" />
+                    <span>23:59 WIB</span>
+                  </div>
                 </div>
               </div>
             </div>
-            <span className="text-white bg-green-500 px-4 py-2 text-xl rounded-full font-bold shadow-lg">
+            <span className="text-white bg-green-500 px-3 py-1 w-full md:w-32 text-center sm:px-4 sm:py-2 text-sm sm:text-xl rounded-full font-bold shadow-lg">
               {tugasDetail.point} poin
             </span>
           </CardTitle>
         </CardHeader>
-        <CardContent className="p-6">
-          <div className="bg-blue-50 p-4 rounded-lg mb-6">
+        <CardContent className="p-4 sm:p-6">
+          <div className="bg-blue-50 p-3 sm:p-4 rounded-lg mb-4 sm:mb-6">
             <p className="font-semibold text-blue-800 mb-2">Deskripsi Tugas:</p>
-            <p className="text-gray-700">{tugasDetail.description}</p>
+            <p className="text-gray-700 text-sm sm:text-base">
+              {tugasDetail.description}
+            </p>
           </div>
 
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-              <div className="bg-gradient-to-r from-blue-100 to-indigo-100 p-6 rounded-xl">
-                <p className="text-xl font-bold text-blue-800 mb-6">
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="space-y-6 sm:space-y-8"
+            >
+              <div className="bg-gradient-to-r from-blue-100 to-indigo-100 p-4 sm:p-6 rounded-xl">
+                <p className="text-lg sm:text-xl font-bold text-blue-800 mb-4 sm:mb-6">
                   Selesaikan Tugas:
                 </p>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
                   <div>
-                    <div className="mb-4 w-full h-[250px] border-2 border-dashed border-blue-300 rounded-lg flex items-center justify-center bg-white overflow-hidden">
+                    <div className="mb-4 w-full h-[200px] sm:h-[250px] border-2 border-dashed border-blue-300 rounded-lg flex items-center justify-center bg-white overflow-hidden">
                       {previewImage ? (
                         <Image
                           src={previewImage}
@@ -85,8 +96,8 @@ const FormSubmitTugas = () => {
                         />
                       ) : (
                         <div className="text-blue-400 flex flex-col items-center">
-                          <ImageIcon size={64} />
-                          <p className="mt-2 text-sm">
+                          <ImageIcon size={48} />
+                          <p className="mt-2 text-xs sm:text-sm text-center px-2">
                             Belum ada gambar yang diunggah
                           </p>
                         </div>
@@ -97,7 +108,7 @@ const FormSubmitTugas = () => {
                       name="image"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className="text-blue-700">
+                          <FormLabel className="text-blue-700 text-sm sm:text-base">
                             Upload Bukti Tugas
                           </FormLabel>
                           <FormControl>
@@ -108,7 +119,7 @@ const FormSubmitTugas = () => {
                                 field.onChange(e.target.files);
                                 handleImageChange(e);
                               }}
-                              className="h-13 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                              className="text-sm sm:text-base h-[52px] pb-3 sm:h-15 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
                             />
                           </FormControl>
                           <FormMessage />
@@ -121,13 +132,13 @@ const FormSubmitTugas = () => {
                     name="description"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="text-blue-700">
+                        <FormLabel className="text-blue-700 text-sm sm:text-base">
                           Keterangan Tugas
                         </FormLabel>
                         <FormControl>
                           <Textarea
                             placeholder="Masukkan keterangan tugas di sini"
-                            className="h-[320px] resize-none focus:ring-2 focus:ring-blue-500"
+                            className="h-[200px] sm:h-[320px] resize-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
                             {...field}
                           />
                         </FormControl>
@@ -139,7 +150,7 @@ const FormSubmitTugas = () => {
               </div>
               <Button
                 type="submit"
-                className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-lg py-3 rounded-full transition-all duration-300 transform hover:scale-105"
+                className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-base sm:text-lg py-2 sm:py-3 rounded-full transition-all duration-300 transform hover:scale-105"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? (

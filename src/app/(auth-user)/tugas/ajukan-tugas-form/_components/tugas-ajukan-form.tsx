@@ -96,11 +96,11 @@ const FormTugas = () => {
   };
 
   return (
-    <div className="container mx-auto p-6">
+    <div className="container mx-auto p-0 md:p-6">
       <Card className="w-full max-w-2xl mx-auto">
         <CardHeader>
           <CardTitle className="text-2xl font-bold text-center">
-            <p className="font-bold text-4xl mt-3 mb-8 text-blue-800 flex items-center">
+            <p className="font-bold text-2xl md:text-4xl mt-3 mb-8 text-blue-800 flex items-center">
               <History className="mr-3 h-10 w-10" />
               Pengajuan Tugas
             </p>

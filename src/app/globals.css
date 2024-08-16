@@ -3,6 +3,6 @@
 @tailwind utilities;
   
 .page-wrapper {
-    @apply px-8 pb-8 pt-2;
+    @apply px-4 md:px-8 pb-8 pt-2;
   }
   

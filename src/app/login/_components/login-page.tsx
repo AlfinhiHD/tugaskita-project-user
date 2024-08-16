@@ -16,7 +16,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Input } from "@/components/ui/input";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { LoginValue } from "@/app/_constant/global-types";
 import instance from "@/app/_utils/axios.instance";
 import { useAuth } from "@/app/_hooks/useAuth";
@@ -36,6 +36,7 @@ const formSchema = z.object({
 
 export default function LoginPage() {
   const [authError, setAuthError] = React.useState("");
+  const [isLoading, setIsLoading] = React.useState(false);
   const auth = useAuth();
   const { login } = auth;
 
@@ -51,6 +52,8 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = React.useState(false);
 
   const onSubmit = async (values: LoginValue) => {
+    setIsLoading(true);
+    setAuthError("");
     console.log(values);
     const { email, password } = values;
     try {
@@ -66,6 +69,8 @@ export default function LoginPage() {
       }
     } catch (error) {
       setAuthError("Email atau password ada yang salah!");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -164,8 +169,20 @@ export default function LoginPage() {
                 )}
               />
               {authError && <p className="text-red-500 text-sm">{authError}</p>}
-              <Button type="submit" className="w-full" variant="default">
-                Log In
+              <Button
+                type="submit"
+                className="w-full"
+                variant="default"
+                disabled={isLoading}
+              >
+                {isLoading ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Loading...
+                  </>
+                ) : (
+                  "Log In"
+                )}
               </Button>
             </form>
           </Form>

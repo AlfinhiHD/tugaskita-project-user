@@ -28,7 +28,7 @@ const TukarPoinPage = () => {
     pageCount,
     userPoints,
     loadingrReward,
-    loadingProfile
+    loadingProfile,
   } = useTukarPoin();
 
   const handleExchange = (reward) => {
@@ -42,13 +42,13 @@ const TukarPoinPage = () => {
   return (
     <div className="page-wrapper bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen p-8">
       <div className="max-w-7xl mx-auto mt-3">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="font-bold text-4xl text-blue-800 flex items-center">
-            <Gift className="mr-3 h-10 w-10" />
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 sm:mb-8 space-y-4 sm:space-y-0">
+          <h1 className="font-bold text-xl sm:text-2xl md:text-4xl text-blue-800 flex items-center">
+            <Gift className="mr-2 sm:mr-3 h-8 w-8 sm:h-10 sm:w-10" />
             Tukar Poin
           </h1>
-          <div className="bg-gradient-to-r from-green-400 to-blue-500 p-1 rounded-lg shadow-lg">
-            <span className="block bg-white px-4 py-2 rounded-md text-lg">
+          <div className="bg-gradient-to-r from-green-400 to-blue-500 p-1 rounded-lg shadow-lg self-start sm:self-auto">
+            <span className="block bg-white px-3 sm:px-4 py-1 sm:py-2 rounded-md text-sm sm:text-lg">
               Poin Anda: <b className="text-green-600">{userPoints}</b> Poin
             </span>
           </div>
