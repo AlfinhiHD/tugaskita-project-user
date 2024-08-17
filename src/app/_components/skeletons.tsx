@@ -198,3 +198,9 @@ export const RiwayatPageSkeleton = () => {
     </div>
   );
 };
+
+export const PenaltyPageSkeleton = () => {
+  return (
+    <h1>Loading...</h1>
+  )
+}

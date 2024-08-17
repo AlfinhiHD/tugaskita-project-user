@@ -9,16 +9,16 @@ const RewardCard = ({ reward, userPoints, onExchange }) => {
       <CardContent className="p-4">
         <div className="flex items-center mb-4">
           <Gift className="w-8 h-8 mr-4 flex-shrink-0" />
-          <h3 className="font-semibold text-lg ">{reward.Name}</h3>
+          <h3 className="font-semibold text-lg ">{reward.name}</h3>
         </div>
         <img
-          src={reward.Image}
-          alt={reward.Name}
+          src={reward.image}
+          alt={reward.name}
           className="w-full h-48 object-cover mb-4 rounded-md"
         />
         <div className="flex justify-center my-8">
           <span className="bg-green-500 text-white px-6 py-2 rounded-full text-base">
-            {reward.Price} poin
+            {reward.price} poin
           </span>
         </div>
       </CardContent>

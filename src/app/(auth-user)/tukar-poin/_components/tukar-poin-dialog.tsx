@@ -15,7 +15,7 @@ import instance from "@/app/_utils/axios.instance";
 
 const TukarPoinDialog = ({ reward, userPoints, onExchange }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const isPointsSufficient = userPoints >= reward.Price;
+  const isPointsSufficient = userPoints >= reward.price;
 
   const handleExchange = async () => {
     const result = await Swal.fire({
@@ -33,7 +33,7 @@ const TukarPoinDialog = ({ reward, userPoints, onExchange }) => {
       setIsSubmitting(true);
       try {
         const response = await instance.post("/user-reward/exchange", {
-          reward_id: reward.Id
+          reward_id: reward.id
         });
 
         if (response.data.message === "succes upload request reward") {
@@ -63,7 +63,7 @@ const TukarPoinDialog = ({ reward, userPoints, onExchange }) => {
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle className="text-white">Tukar {reward.Name}</DialogTitle>
+          <DialogTitle className="text-white">Tukar {reward.name}</DialogTitle>
           <DialogDescription className="text-blue-200">
             Apakah Anda yakin ingin menukar poin Anda dengan reward ini?
           </DialogDescription>
@@ -75,7 +75,7 @@ const TukarPoinDialog = ({ reward, userPoints, onExchange }) => {
           </div>
           <div className="flex justify-between items-center mb-4">
             <span className="font-semibold">Poin Dibutuhkan</span>
-            <span className="text-2xl font-bold">{reward.Price}</span>
+            <span className="text-2xl font-bold">{reward.price}</span>
           </div>
           {isPointsSufficient ? (
             <div className="bg-green-100 border-l-4 border-green-500 p-4 mt-4">
@@ -83,7 +83,7 @@ const TukarPoinDialog = ({ reward, userPoints, onExchange }) => {
                 Poin Anda cukup! Sisa poin setelah penukaran:
               </p>
               <p className="text-2xl font-bold text-green-800">
-                {userPoints - reward.Price} poin
+                {userPoints - reward.price} poin
               </p>
             </div>
           ) : (
@@ -92,7 +92,7 @@ const TukarPoinDialog = ({ reward, userPoints, onExchange }) => {
                 Poin Anda tidak mencukupi untuk menukar reward ini.
               </p>
               <p className="text-2xl font-bold text-red-800">
-                Kurang {reward.Price - userPoints} poin
+                Kurang {reward.price - userPoints} poin
               </p>
             </div>
           )}

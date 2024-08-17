@@ -46,34 +46,62 @@ export type TaskDoneType = {
 }
 
 export type RewardType = {
-  Id: string;
-  Name: string;
-  Stock: number;
-  Price: number;
-  Image: string
+  id: string;
+  name: string;
+  stock: number;
+  price: number;
+  image: string
 }
 
-export type RiwayatUploadAndRequestTaskType = {
-  Id: string;
-  TaskId: string;
-  TaskName: string;
-  UserId: string;
-  UserName: string;
-  Image: string;
-  Description: string;
-  Status: string;
-  Type: string;
-  CreatedAt: string;
-  UpdatedAt: string;
+export type RiwayatUploadTaskType = {
+  id: string;
+  task_id: string;
+  task_name: string;
+  user_id: string;
+  user_name: string;
+  image: string;
+  description: string;
+  status: string;
+  type: string;
+  message: string;
+  created_at: string;
+  updated_at: string;
+}
+
+
+export type RiwayatRequestTaskType = {
+  id: string;
+  title: string;
+  user_id: string;
+  user_name: string;
+  image: string;
+  type: string;
+  description: string;
+  point: number;
+  status: string;
+  message: string;
+  created_at: string;
+  updated_at: string;
 }
 
 export type RiwayatReward = {
-  Id: string;
-  RewardId: string;
-  RewardName: string;
-  UserId: string;
-  Status: string;
-  CreatedAt: string;
-  UpdatedAt: string;
+  id: string;
+  reward_id: string;
+  reward_name: string;
+  user_id: string;
+  status: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export type PenaltyType = {
+  id: string;
+  user_id: string;
+  user_name: string;
+  point: number;
+  description: string;
+  date: string;
+  created_at: string;
+  updated_at: string;
 }
 

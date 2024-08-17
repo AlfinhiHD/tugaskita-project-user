@@ -37,15 +37,15 @@ const useTukarPoin = () => {
 
   useEffect(() => {
     const filtered = reward?.data?.filter((reward) => {
-      const matchSearch = reward.Name.toLowerCase().includes(search.toLowerCase());
+      const matchSearch = reward.name.toLowerCase().includes(search.toLowerCase());
       const matchPoints =
         pointRange === "semua"
           ? true
           : pointRange === "1001+"
-          ? reward.Price > 1000
+          ? reward.price > 1000
           : pointRange === "501-1000"
-          ? reward.Price >= 501 && reward.Price <= 1000
-          : reward.Price >= 100 && reward.Price <= 500;
+          ? reward.price >= 501 && reward.price <= 1000
+          : reward.price >= 100 && reward.price <= 500;
       return matchSearch && matchPoints;
     });
     setFilteredRewards(filtered);

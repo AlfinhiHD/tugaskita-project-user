@@ -1,7 +1,8 @@
 import {
   ResponseDTO,
+  RiwayatRequestTaskType,
+  RiwayatUploadTaskType,
   RiwayatReward,
-  RiwayatUploadAndRequestTaskType,
 } from "@/app/_constant/global-types";
 import RewardService from "@/app/_services/reward-service";
 import TugasService from "@/app/_services/tugas-service";
@@ -9,13 +10,16 @@ import { useEffect, useState, useMemo } from "react";
 import useSWR from "swr";
 
 const useRiwayat = () => {
-  const [activeTab, setActiveTab] = useState("tugas");
+  const [activeTab, setActiveTab] = useState("upload");
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("semua");
-  const [typeFilter, setTypeFilter] = useState("semua");
   const [dateFilter, setDateFilter] = useState("");
-  const [formattedUploadTask, setFormattedUploadTask] = useState<RiwayatUploadAndRequestTaskType[]>([]);
-  const [formattedRequestTask, setFormattedRequestTask] = useState<RiwayatUploadAndRequestTaskType[]>([]);
+  const [formattedUploadTask, setFormattedUploadTask] = useState<
+    RiwayatUploadTaskType[]
+  >([]);
+  const [formattedRequestTask, setFormattedRequestTask] = useState<
+    RiwayatRequestTaskType[]
+  >([]);
   const [formattedReward, setFormattedReward] = useState<RiwayatReward[]>([]);
 
   const formatDate = (dateString: string) => {
@@ -27,7 +31,7 @@ const useRiwayat = () => {
     error: errorRiwayatUploadTask,
     mutate: mutateRiwayatUploadTask,
     isLoading: loadingRiwayatUploadTask,
-  } = useSWR<ResponseDTO<RiwayatUploadAndRequestTaskType[]>, Error>(
+  } = useSWR<ResponseDTO<RiwayatUploadTaskType[]>, Error>(
     ["/user-task/riwayat"],
     () => TugasService.getUploadTaskHistory()
   );
@@ -37,11 +41,11 @@ const useRiwayat = () => {
     error: errorRiwayatRequestTask,
     mutate: mutateRiwayatRequestTask,
     isLoading: loadingRiwayatRequestTask,
-  } = useSWR<ResponseDTO<RiwayatUploadAndRequestTaskType[]>, Error>(
-    ["/user-task/riwayat"],
+  } = useSWR<ResponseDTO<RiwayatRequestTaskType[]>, Error>(
+    ["/user-task/req-riwayat"],
     () => TugasService.getRequestTaskHistory()
   );
-  
+
   const {
     data: riwayatReward,
     error: errorRiwayatReward,
@@ -54,98 +58,135 @@ const useRiwayat = () => {
 
   useEffect(() => {
     if (riwayatUploadTask?.data) {
-      setFormattedUploadTask(riwayatUploadTask.data.map(task => ({
-        ...task,
-        CreatedAt: formatDate(task.CreatedAt)
-      })));
+      setFormattedUploadTask(
+        riwayatUploadTask.data.map((task) => ({
+          ...task,
+          created_at: formatDate(task.created_at),
+        }))
+      );
     }
   }, [riwayatUploadTask]);
 
   useEffect(() => {
     if (riwayatRequestTask?.data) {
-      setFormattedRequestTask(riwayatRequestTask.data.map(task => ({
-        ...task,
-        CreatedAt: formatDate(task.CreatedAt)
-      })));
+      setFormattedRequestTask(
+        riwayatRequestTask.data.map((task) => ({
+          ...task,
+          created_at: formatDate(task.created_at),
+        }))
+      );
     }
   }, [riwayatRequestTask]);
 
   useEffect(() => {
     if (riwayatReward?.data) {
-      setFormattedReward(riwayatReward.data.map(reward => ({
-        ...reward,
-        CreatedAt: formatDate(reward.CreatedAt)
-      })));
+      setFormattedReward(
+        riwayatReward.data.map((reward) => ({
+          ...reward,
+          created_at: formatDate(reward.created_at),
+        }))
+      );
     }
   }, [riwayatReward]);
 
-  const filteredTaskData = useMemo(() => {
-    const allTasks = [...formattedUploadTask, ...formattedRequestTask];
-    
-    return allTasks.filter((task) => {
-      const matchSearch = task.TaskName.toLowerCase().includes(searchTerm.toLowerCase());
-      const matchStatus = statusFilter === "semua" || task.Status === statusFilter;
-      const matchType = typeFilter === "semua" || task.Type === typeFilter;
-      const matchDate = !dateFilter || task.CreatedAt === dateFilter;
+  const filteredUploadTaskData = useMemo(() => {
+    return formattedUploadTask.filter((task) => {
+      const matchSearch = task.task_name.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchStatus = statusFilter === "semua" || task.status === statusFilter;
+      const matchDate = !dateFilter || task.created_at === dateFilter;
   
-      return matchSearch && matchStatus && matchType && matchDate;
+      return matchSearch && matchStatus && matchDate;
     });
-  }, [formattedUploadTask, formattedRequestTask, searchTerm, statusFilter, typeFilter, dateFilter]);
+  }, [formattedUploadTask, searchTerm, statusFilter, dateFilter]);
+
+  const filteredRequestTaskData = useMemo(() => {
+    return formattedRequestTask.filter((task) => {
+      const matchSearch = task.title.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchStatus = statusFilter === "semua" || task.status === statusFilter;
+      const matchDate = !dateFilter || task.created_at === dateFilter;
+  
+      return matchSearch && matchStatus && matchDate;
+    });
+  }, [formattedRequestTask, searchTerm, statusFilter, dateFilter]);
   
   const filteredRewardData = useMemo(() => {
     return formattedReward.filter((reward) => {
-      const matchSearch = reward.RewardName.toLowerCase().includes(searchTerm.toLowerCase());
-      const matchStatus = statusFilter === "semua" || reward.Status === statusFilter;
-      const matchDate = !dateFilter || reward.CreatedAt === dateFilter;
+      const matchSearch = reward.reward_name.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchStatus = statusFilter === "semua" || reward.status === statusFilter;
+      const matchDate = !dateFilter || reward.created_at === dateFilter;
   
       return matchSearch && matchStatus && matchDate;
     });
   }, [formattedReward, searchTerm, statusFilter, dateFilter]);
 
-  const taskColumns = [
-    { key: "TaskName", header: "Nama Task", sortable: true },
-    { key: "Type", header: "Type", sortable: true },
-    { key: "CreatedAt", header: "Tanggal", sortable: true },
+  const uploadTaskColumns = [
+    { key: "task_name", header: "Nama Task", sortable: true },
+    { key: "created_at", header: "Tanggal", sortable: true },
     {
-      key: "Status",
+      key: "status",
       header: "Status",
       sortable: true,
-      render: (item: RiwayatUploadAndRequestTaskType) => (
+      render: (item: RiwayatUploadTaskType) => (
         <span
           className={`px-2 py-1 rounded-full text-sm font-medium
           ${
-            item.Status === "Perlu Review"
+            item.status === "Perlu Review"
               ? "bg-yellow-400 text-yellow-800"
-              : item.Status === "Ditolak"
+              : item.status === "Ditolak"
               ? "bg-red-400 text-red-800"
               : "bg-green-400 text-green-800"
           }`}
         >
-          {item.Status}
+          {item.status}
+        </span>
+      ),
+    },
+  ];
+
+  const requestTaskColumns = [
+    { key: "title", header: "Judul Pengajuan", sortable: true },
+    { key: "point", header: "Point", sortable: true },
+    { key: "created_at", header: "Tanggal", sortable: true },
+    {
+      key: "status",
+      header: "Status",
+      sortable: true,
+      render: (item: RiwayatRequestTaskType) => (
+        <span
+          className={`px-2 py-1 rounded-full text-sm font-medium
+          ${
+            item.status === "Perlu Review"
+              ? "bg-yellow-400 text-yellow-800"
+              : item.status === "Ditolak"
+              ? "bg-red-400 text-red-800"
+              : "bg-green-400 text-green-800"
+          }`}
+        >
+          {item.status}
         </span>
       ),
     },
   ];
   
   const rewardColumns = [
-    { key: "RewardName", header: "Nama Reward", sortable: true },
-    { key: "CreatedAt", header: "Tanggal Penukaran", sortable: true },
+    { key: "reward_name", header: "Nama Reward", sortable: true },
+    { key: "created_at", header: "Tanggal Penukaran", sortable: true },
     {
-      key: "Status",
+      key: "status",
       header: "Status",
       sortable: true,
       render: (item: RiwayatReward) => (
         <span
           className={`px-2 py-1 rounded-full text-sm font-medium
           ${
-            item.Status === "Perlu Review"
+            item.status === "Perlu Review"
               ? "bg-yellow-400 text-yellow-800"
-              : item.Status === "Ditolak"
+              : item.status === "Ditolak"
               ? "bg-red-400 text-red-800"
               : "bg-green-400 text-green-800"
           }`}
         >
-          {item.Status}
+          {item.status}
         </span>
       ),
     },
@@ -158,13 +199,13 @@ const useRiwayat = () => {
     setSearchTerm,
     statusFilter,
     setStatusFilter,
-    typeFilter,
-    setTypeFilter,
     dateFilter,
     setDateFilter,
-    taskData: filteredTaskData,
+    uploadTaskData: filteredUploadTaskData,
+    requestTaskData: filteredRequestTaskData,
     rewardData: filteredRewardData,
-    taskColumns,
+    uploadTaskColumns,
+    requestTaskColumns,
     rewardColumns,
     isLoading: loadingRiwayatUploadTask || loadingRiwayatRequestTask || loadingRiwayatReward,
     error: errorRiwayatUploadTask || errorRiwayatRequestTask || errorRiwayatReward,
