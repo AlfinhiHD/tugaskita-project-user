@@ -8,6 +8,8 @@ import RewardService from "@/app/_services/reward-service";
 import TugasService from "@/app/_services/tugas-service";
 import { useEffect, useState, useMemo } from "react";
 import useSWR from "swr";
+import UploadTaskDialog from "../_components/upload-task-dialog";
+import RequestTaskDialog from "../_components/request-task-dialog";
 
 const useRiwayat = () => {
   const [activeTab, setActiveTab] = useState("upload");
@@ -21,6 +23,7 @@ const useRiwayat = () => {
     RiwayatRequestTaskType[]
   >([]);
   const [formattedReward, setFormattedReward] = useState<RiwayatReward[]>([]);
+  const [openDialog, setOpenDialog] = useState(null);
 
   const formatDate = (dateString: string) => {
     return dateString.substring(0, 10);
@@ -141,6 +144,13 @@ const useRiwayat = () => {
         </span>
       ),
     },
+    {
+      key: "actions",
+      header: "Aksi",
+      render: (item: RiwayatUploadTaskType) => (
+        <UploadTaskDialog task={item} openDialog={openDialog} setOpenDialog={setOpenDialog} />
+      ),
+    },
   ];
 
   const requestTaskColumns = [
@@ -164,6 +174,13 @@ const useRiwayat = () => {
         >
           {item.status}
         </span>
+      ),
+    },
+    {
+      key: "actions",
+      header: "Aksi",
+      render: (item: RiwayatUploadTaskType) => (
+        <RequestTaskDialog task={item} openDialog={openDialog} setOpenDialog={setOpenDialog} />
       ),
     },
   ];

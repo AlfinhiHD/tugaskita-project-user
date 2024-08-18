@@ -26,17 +26,17 @@ const ProfilSaya = () => {
         <div className="bg-blue-700 p-8 text-white">
           <div className="flex flex-col md:flex-row items-center">
             <Image
-              src={user.image || '/assets/images/default-image.jpg'}
-              alt={user.name}
+              src={user?.image || '/assets/images/default-image.jpg'}
+              alt={user?.name}
               width={192}
               height={192}
               className="w-32 h-32 md:w-48 md:h-48 rounded-full mb-4 md:mb-0 md:mr-8 object-cover border-4 border-white shadow-lg"
             />
             <div className="text-center md:text-left flex-grow">
-              <h2 className="text-3xl font-bold mb-2">{user.name}</h2>
+              <h2 className="text-3xl font-bold mb-2">{user?.name}</h2>
               <div className="flex items-center justify-center md:justify-start mb-4">
                 <Mail className="w-5 h-5 mr-2" />
-                <p className="text-blue-200">{user.email}</p>
+                <p className="text-blue-200">{user?.email}</p>
               </div>
             </div>
           </div>
@@ -49,7 +49,7 @@ const ProfilSaya = () => {
                 <Star className="w-6 h-6 text-blue-700 mr-2" />
                 <p className="text-lg font-semibold text-blue-700">Poin</p>
               </div>
-              <p className="text-3xl font-bold text-blue-800">{user.point}</p>
+              <p className="text-3xl font-bold text-blue-800">{user?.point}</p>
             </div>
             <div className="bg-green-100 p-6 rounded-lg text-center">
               <div className="flex items-center justify-center mb-2">

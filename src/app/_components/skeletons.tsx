@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { User } from "lucide-react";
+import { AlertTriangle, User } from "lucide-react";
 
 export const StatCardSkeleton = () => (
   <Card className="bg-gradient-to-br from-gray-200 to-gray-300 shadow-lg">
@@ -201,6 +201,33 @@ export const RiwayatPageSkeleton = () => {
 
 export const PenaltyPageSkeleton = () => {
   return (
-    <h1>Loading...</h1>
-  )
-}
+    <div className="page-wrapper bg-gradient-to-br from-red-50 to-orange-100 min-h-screen p-4 sm:p-6 md:p-8">
+      <div className="mx-auto max-w-7xl">
+        <h1 className="font-bold text-lg sm:text-xl md:text-2xl lg:text-3xl text-red-800 mb-4 sm:mb-6 md:mb-8 flex items-center">
+          <AlertTriangle className="mr-2 sm:mr-3 h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8 lg:h-10 lg:w-10" />
+          <span className="break-words">Daftar Pelanggaran</span>
+        </h1>
+
+        <div className="bg-white shadow-xl rounded-md overflow-hidden">
+          <div className="p-4 sm:p-6">
+            <div className="flex flex-col sm:flex-row flex-wrap items-start sm:items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
+              <div className="w-full sm:w-48 h-10 bg-gray-200 rounded-full animate-pulse"></div>
+            </div>
+            <div className="overflow-x-auto">
+              <div className="space-y-4">
+                {[...Array(5)].map((_, index) => (
+                  <div key={index} className="flex space-x-4">
+                    <div className="w-1/4 h-6 bg-gray-200 rounded animate-pulse"></div>
+                    <div className="w-1/4 h-6 bg-gray-200 rounded animate-pulse"></div>
+                    <div className="w-1/4 h-6 bg-gray-200 rounded animate-pulse"></div>
+                    <div className="w-1/4 h-6 bg-gray-200 rounded animate-pulse"></div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};

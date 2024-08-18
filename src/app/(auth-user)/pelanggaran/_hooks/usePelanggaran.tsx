@@ -2,9 +2,11 @@ import { useState, useMemo } from "react";
 import { PenaltyType, ResponseDTO } from "@/app/_constant/global-types";
 import useSWR from "swr";
 import PenaltyService from "@/app/_services/pelanggaran-service";
+import PenaltyDetailDialog from "../_components/pelanggaran-dialog";
 
 const usePelanggaran = () => {
   const [dateFilter, setDateFilter] = useState("");
+  const [openDialog, setOpenDialog] = useState(null);
 
   const {
     data: penaltyData,
@@ -27,20 +29,10 @@ const usePelanggaran = () => {
       key: "actions",
       header: "Aksi",
       render: (item: PenaltyType) => (
-        <button
-          onClick={() => openDetailDialog(item)}
-          className="px-3 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
-        >
-          Detail
-        </button>
+        <PenaltyDetailDialog penalty={item} openDialog={openDialog} setOpenDialog={setOpenDialog} />
       ),
     },
   ];
-
-  const openDetailDialog = (penalty: PenaltyType) => {
-    // Implement dialog opening logic here
-    console.log("Opening detail for:", penalty);
-  };
 
   return {
     dateFilter,
@@ -49,7 +41,6 @@ const usePelanggaran = () => {
     penaltyColumns,
     isLoading,
     error,
-    openDetailDialog,
   };
 };
 

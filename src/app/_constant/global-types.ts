@@ -38,8 +38,10 @@ export type ProfileSiswaType = {
   role: string;
   email: string;
   point: string;
+  religion: string;
   total_point: string;
 };
+
 
 export type TaskDoneType = {
   count: number;
