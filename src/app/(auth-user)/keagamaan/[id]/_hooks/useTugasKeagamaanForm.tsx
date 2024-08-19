@@ -46,7 +46,7 @@ export const useTugasKeagamaanForm = () => {
     mutate: mutateTaskDetail,
     isLoading: loadingTaskDetail,
   } = useSWR<ResponseDTO<ReligionTaskType>, Error>(
-    params.id ? `/user-task/religion-task/${params.id}` : null,
+    params.id ? `/user-task/religion/${params.id}` : null,
     () => (params.id ? KeagamaanService.getReligionTaskDetail(params.id) : null)
   );
 

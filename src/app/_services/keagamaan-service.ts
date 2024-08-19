@@ -8,7 +8,7 @@ const getReligionTask = async () => {
 };
 
 const getReligionTaskDetail = async (paramsId) => {
-  const res = await instance.get(`/user-task/religion-task/${paramsId}`);
+  const res = await instance.get(`/user-task/religion/${paramsId}`);
 
   return res.data;
 };
