@@ -104,7 +104,7 @@ const useRiwayat = () => {
 
   const filteredRequestTaskData = useMemo(() => {
     return formattedRequestTask.filter((task) => {
-      const matchSearch = task.title.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchSearch = task.title?.toLowerCase().includes(searchTerm.toLowerCase());
       const matchStatus = statusFilter === "semua" || task.status === statusFilter;
       const matchDate = !dateFilter || task.created_at === dateFilter;
   
