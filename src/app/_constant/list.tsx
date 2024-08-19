@@ -41,7 +41,7 @@ export const navigationItems = [
     icon: ClipboardList,
     label: "Riwayat Keagamaan",
     path: "/riwayat-keagamaan",
-    id: "history-keagamaan",
+    id: "histori-religion",
   },
   {
     icon: Flag,

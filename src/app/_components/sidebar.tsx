@@ -19,7 +19,7 @@ const Sidebar = () => {
   useEffect(() => {
     const setActiveItemFromPath = (items) => {
       for (let item of items) {
-        if (pathname.startsWith(item.path)) {
+        if (pathname.match(item.path)) {
           setActiveItem(item.id);
           return;
         }

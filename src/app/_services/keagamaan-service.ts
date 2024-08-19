@@ -32,7 +32,7 @@ const getReqReligionTask = async () => {
 }
 
 const getSubmitReligionTask = async () => {
-    const res = await instance.get("/user-task/religion-task/history")
+    const res = await instance.get("/user-task/religion/history")
 
     return res.data
 }
