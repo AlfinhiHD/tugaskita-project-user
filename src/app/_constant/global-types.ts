@@ -42,18 +42,17 @@ export type ProfileSiswaType = {
   total_point: string;
 };
 
-
 export type TaskDoneType = {
   count: number;
-}
+};
 
 export type RewardType = {
   id: string;
   name: string;
   stock: number;
   price: number;
-  image: string
-}
+  image: string;
+};
 
 export type RiwayatUploadTaskType = {
   id: string;
@@ -68,8 +67,7 @@ export type RiwayatUploadTaskType = {
   message: string;
   created_at: string;
   updated_at: string;
-}
-
+};
 
 export type RiwayatRequestTaskType = {
   id: string;
@@ -84,7 +82,7 @@ export type RiwayatRequestTaskType = {
   message: string;
   created_at: string;
   updated_at: string;
-}
+};
 
 export type RiwayatReward = {
   id: string;
@@ -94,7 +92,7 @@ export type RiwayatReward = {
   status: string;
   created_at: string;
   updated_at: string;
-}
+};
 
 export type PenaltyType = {
   id: string;
@@ -105,5 +103,45 @@ export type PenaltyType = {
   date: string;
   created_at: string;
   updated_at: string;
-}
+};
 
+export type ReligionTaskType = {
+  id: string;
+  title: string;
+  description: string;
+  religion: string;
+  point: number;
+  start_date: string;
+  end_date: string;
+  created_at: string;
+  updated_at: string;
+};
+
+export type ReligionTaskSubmitHistoryType = {
+  id: string;
+  task_id: string;
+  task_name: string;
+  user_id: string;
+  username: string;
+  image: string;
+  description: string;
+  status: string;
+  message: string;
+  created_at: string;
+  updated_at: string;
+};
+
+export type ReligionTaskReqHistoryType = {
+  id: string;
+  title: string;
+  user_id: string;
+  user_name: string;
+  image: string;
+  type: string;
+  description: string;
+  point: number;
+  status: string;
+  message: string;
+  created_at: string;
+  updated_at: string;
+};

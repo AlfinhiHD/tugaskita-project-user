@@ -12,9 +12,17 @@ const getCountTaskDone = async () => {
   return res.data;
 };
 
+const getTopRank = async () => {
+  const res = await instance.get("/user/rank");
+
+  return res.data;
+};
+
+
 const SiswaService = {
   getSiswaProfile,
-  getCountTaskDone
+  getCountTaskDone,
+  getTopRank
 };
 
 export default SiswaService;

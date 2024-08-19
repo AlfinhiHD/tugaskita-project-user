@@ -1,4 +1,4 @@
-import { Home, ClipboardList, Gift, User, LogOut, Flag } from "lucide-react";
+import { Home, ClipboardList, Gift, User, LogOut, Flag, Trophy } from "lucide-react";
 
 export const navigationItems = [
   {
@@ -8,10 +8,22 @@ export const navigationItems = [
     id: "dashboard",
   },
   {
+    icon: Trophy,
+    label: "Leaderboard",
+    path: "/leaderboard",
+    id: "leaderboard"
+  },
+  {
     icon: ClipboardList,
     label: "Tugas",
     path: "/tugas",
     id: "tugas",
+  },
+  {
+    icon: ClipboardList,
+    label: "Keagamaan",
+    path: "/tugas-keagamaan",
+    id: "tugas-keagamaan",
   },
   {
     icon: Gift,
@@ -24,6 +36,12 @@ export const navigationItems = [
     label: "Riwayat",
     path: "/riwayat",
     id: "riwayat",
+  },
+  {
+    icon: ClipboardList,
+    label: "Riwayat Keagamaan",
+    path: "/riwayat-keagamaan",
+    id: "riwayat-keagamaan",
   },
   {
     icon: Flag,

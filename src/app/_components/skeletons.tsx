@@ -231,3 +231,21 @@ export const PenaltyPageSkeleton = () => {
     </div>
   );
 };
+
+export const LeaderboardSkeleton = () => (
+  <div className="space-y-4">
+    {[...Array(15)].map((_, index) => (
+      <div
+        key={index}
+        className="flex items-center gap-x-4 bg-gray-100 p-4 rounded-lg animate-pulse"
+      >
+        <div className="w-8 h-8 bg-gray-300 rounded-full"></div>
+        <div className="w-12 h-12 bg-gray-300 rounded-full"></div>
+        <div className="flex-grow flex items-center justify-between">
+          <div className="h-4 bg-gray-300 rounded w-1/3"></div>
+          <div className="h-4 bg-gray-300 rounded w-1/4"></div>
+        </div>
+      </div>
+    ))}
+  </div>
+);
