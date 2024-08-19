@@ -1,7 +1,14 @@
 import instance from "../_utils/axios.instance";
 
+
 const getReligionTask = async () => {
-  const res = await instance.get("/user-task/religion-task");
+  const res = await instance.get("/user-task/religion");
+
+  return res.data;
+};
+
+const getReligionTaskDetail = async (paramsId) => {
+  const res = await instance.get(`/user-task/religion-task/${paramsId}`);
 
   return res.data;
 };
@@ -35,7 +42,8 @@ const KeagamaanService = {
   postReligionTask,
   postReqReligionTask,
   getReqReligionTask,
-  getSubmitReligionTask
+  getSubmitReligionTask,
+  getReligionTaskDetail
 };
 
 export default KeagamaanService;

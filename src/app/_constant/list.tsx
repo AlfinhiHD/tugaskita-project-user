@@ -21,9 +21,9 @@ export const navigationItems = [
   },
   {
     icon: ClipboardList,
-    label: "Keagamaan",
-    path: "/tugas-keagamaan",
-    id: "tugas-keagamaan",
+    label: "Tugas Keagamaan",
+    path: "/keagamaan",
+    id: "keagamaan",
   },
   {
     icon: Gift,
@@ -41,7 +41,7 @@ export const navigationItems = [
     icon: ClipboardList,
     label: "Riwayat Keagamaan",
     path: "/riwayat-keagamaan",
-    id: "riwayat-keagamaan",
+    id: "history-keagamaan",
   },
   {
     icon: Flag,
