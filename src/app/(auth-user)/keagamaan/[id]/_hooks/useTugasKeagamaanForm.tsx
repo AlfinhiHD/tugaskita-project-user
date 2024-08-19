@@ -78,13 +78,13 @@ export const useTugasKeagamaanForm = () => {
     formData.append("description", description);
 
     try {
-      const response = await instance.post("/user-task/religion-task", formData, {
+      const response = await instance.post("/user-task/religion", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
 
-      if (response.data.message === "success upload task") {
+      if (response.data.message === "succes upload religion task") {
         setIsSubmitting(false);
         Swal.fire("Success", "Berhasil submit tugas keagamaan", "success");
         router.push("/keagamaan")
