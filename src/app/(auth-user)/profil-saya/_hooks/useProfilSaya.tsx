@@ -4,12 +4,14 @@ import {
   TaskDoneType,
 } from "@/app/_constant/global-types";
 import SiswaService from "@/app/_services/siswa-service";
+import { BASE_IMAGE_URL } from "@/app/_utils/axios.instance";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
 
 const useProfilSaya = () => {
 
   const [isChangingPassword, setIsChangingPassword] = useState(false);
+  const [updatedData, setUpdatedData] = useState(null);
 
   const {
     data: profile,
@@ -19,6 +21,16 @@ const useProfilSaya = () => {
   } = useSWR<ResponseDTO<ProfileSiswaType>, Error>(["/user/profile"], () =>
     SiswaService.getSiswaProfile()
   );
+
+  useEffect(() => {
+    if (profile && profile.data) {
+      const updatedData = {
+        ...profile.data,
+        image: profile.data.image ? `${BASE_IMAGE_URL}${profile.data.image.replace('public/', '')}` : null
+      };
+      setUpdatedData(updatedData);
+    }
+  }, [profile]);
 
   const {
     data: taskDone,
@@ -34,7 +46,7 @@ const useProfilSaya = () => {
   })
 
   return {
-    user: profile?.data,
+    user: updatedData,
     loadingProfile,
     isChangingPassword,
     setIsChangingPassword,

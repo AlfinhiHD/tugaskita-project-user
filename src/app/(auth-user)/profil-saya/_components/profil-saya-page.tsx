@@ -4,7 +4,7 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import useProfilSaya from "../_hooks/useProfilSaya";
 import ChangePasswordDialog from "./change-password-dialog";
-import { Mail, Star, CheckCircle, User } from "lucide-react";
+import { Mail, Star, CheckCircle, User, Book, MapPin, School } from "lucide-react";
 import { ProfilSayaSkeleton } from "@/app/_components/skeletons";
 import Image from "next/image";
 
@@ -17,7 +17,7 @@ const ProfilSaya = () => {
 
   return (
     <div className="page-wrapper p-8 bg-gray-100 min-h-screen">
-      <h1 className="flex items-center ms-3 mt-3 font-bold text-4xl mb-8  text-blue-800 shadow-text">
+      <h1 className="flex items-center ms-3 mt-3 font-bold text-4xl mb-8 text-blue-800 shadow-text">
         <User className="mr-3 h-10 w-10" />
         Profil Saya
       </h1>
@@ -61,6 +61,29 @@ const ProfilSaya = () => {
               <p className="text-3xl font-bold text-green-800">
                 {taskDone}
               </p>
+            </div>
+          </div>
+
+          {/* New section for additional details */}
+          <div className="bg-gray-50 p-6 rounded-lg mb-8">
+            <h3 className="text-xl font-semibold text-gray-800 mb-4">Informasi Lainnya</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="flex items-center">
+                <Book className="w-5 h-5 text-blue-600 mr-2" />
+                <p><span className="font-medium">Kelas:</span> {user?.class}</p>
+              </div>
+              <div className="flex items-center">
+                <School className="w-5 h-5 text-blue-600 mr-2" />
+                <p><span className="font-medium">Sekolah:</span> {user?.school}</p>
+              </div>
+              <div className="flex items-center">
+                <Book className="w-5 h-5 text-blue-600 mr-2" />
+                <p><span className="font-medium">Agama:</span> {user?.religion}</p>
+              </div>
+              <div className="flex items-center">
+                <MapPin className="w-5 h-5 text-blue-600 mr-2" />
+                <p><span className="font-medium">Alamat:</span> {user?.address}</p>
+              </div>
             </div>
           </div>
 

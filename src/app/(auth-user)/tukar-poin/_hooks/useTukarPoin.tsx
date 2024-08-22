@@ -1,10 +1,13 @@
-import { ProfileSiswaType, ResponseDTO, RewardType } from "@/app/_constant/global-types";
+import {
+  ProfileSiswaType,
+  ResponseDTO,
+  RewardType,
+} from "@/app/_constant/global-types";
 import RewardService from "@/app/_services/reward-service";
 import SiswaService from "@/app/_services/siswa-service";
+import { BASE_IMAGE_URL } from "@/app/_utils/axios.instance";
 import { useState, useEffect } from "react";
 import useSWR from "swr";
-
-
 
 const useTukarPoin = () => {
   const [search, setSearch] = useState("");
@@ -32,12 +35,21 @@ const useTukarPoin = () => {
   );
 
   useEffect(() => {
-    setFilteredRewards(reward?.data)
-  }, [reward])
+    if (reward && reward?.data) {
+      const formatedData = reward?.data.map((user) => ({
+        ...user,
+        image: `${BASE_IMAGE_URL}${user.image.replace("public/", "")}`,
+      }));
+
+      setFilteredRewards(formatedData);
+    }
+  }, [reward]);
 
   useEffect(() => {
     const filtered = reward?.data?.filter((reward) => {
-      const matchSearch = reward.name.toLowerCase().includes(search.toLowerCase());
+      const matchSearch = reward.name
+        .toLowerCase()
+        .includes(search.toLowerCase());
       const matchPoints =
         pointRange === "semua"
           ? true
@@ -71,7 +83,7 @@ const useTukarPoin = () => {
     userPoints: profile?.data?.point,
     itemsPerPage,
     loadingrReward,
-    loadingProfile
+    loadingProfile,
   };
 };
 

@@ -59,7 +59,8 @@ const useDashboard = () => {
     loadingTasks,
     loadingProfile,
     loadingTaskDone,
-    taskDone: taskDone?.count
+    taskDone: taskDone?.count,
+    profile: profile?.data, 
   };
 };
 

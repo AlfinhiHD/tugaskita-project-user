@@ -37,6 +37,9 @@ export type ProfileSiswaType = {
   image: string;
   role: string;
   email: string;
+  class: string;
+  address: string;
+  school: string;
   point: string;
   religion: string;
   total_point: string;

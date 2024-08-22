@@ -3,7 +3,7 @@
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import MainTable from "@/app/_components/main-table";
-import { Coins, ClipboardList, ClipboardCheck, BarChart2 } from "lucide-react";
+import { Coins, ClipboardList, ClipboardCheck, BarChart2, School, Users } from "lucide-react";
 import useDashboard from "../_hooks/useDashboard";
 import { StatCardSkeleton, TableSkeleton } from "@/app/_components/skeletons";
 
@@ -16,6 +16,7 @@ const Dashboard = () => {
     loadingTasks,
     loadingTaskDone,
     taskDone,
+    profile,
   } = useDashboard();
 
   return (
@@ -25,6 +26,32 @@ const Dashboard = () => {
           <BarChart2 className="mr-3 h-10 w-10" />
           Dashboard
         </h1>
+
+        {loadingProfile ? (
+          <div className="bg-white rounded-lg shadow-md p-6 mb-8 animate-pulse">
+            <div className="h-8 bg-gray-200 rounded w-3/4 mb-4"></div>
+            <div className="h-6 bg-gray-200 rounded w-1/2 mb-2"></div>
+            <div className="h-6 bg-gray-200 rounded w-1/2"></div>
+          </div>
+        ) : (
+          <Card className="bg-white shadow-md rounded-lg overflow-hidden mb-8">
+            <CardContent className="p-6">
+              <h2 className="text-2xl font-bold text-blue-800 mb-4">
+                Selamat datang, {profile?.name}!
+              </h2>
+              <div className="flex flex-wrap items-center text-gray-600">
+                <div className="flex items-center mr-6 mb-2">
+                  <School className="w-5 h-5 mr-2 text-blue-500" />
+                  <span>{profile?.school}</span>
+                </div>
+                <div className="flex items-center mb-2">
+                  <Users className="w-5 h-5 mr-2 text-blue-500" />
+                  <span>Kelas {profile?.class}</span>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        )}
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           {loadingProfile && loadingTaskDone ? (
