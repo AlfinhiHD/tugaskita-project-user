@@ -44,6 +44,12 @@ export const navigationItems = [
     id: "histori-religion",
   },
   {
+    icon: Gift,
+    label: "Riwayat Poin",
+    path: "/riwayat-point",
+    id: "histori-point",
+  },
+  {
     icon: Flag,
     label: "Pelanggaran",
     path: "/pelanggaran",

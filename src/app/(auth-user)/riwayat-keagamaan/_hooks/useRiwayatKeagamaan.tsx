@@ -19,7 +19,6 @@ const useRiwayatKeagamaan = () => {
   const [dateFilter, setDateFilter] = useState('');
   const [formattedUploadTask, setFormattedUploadTask] = useState<ReligionTaskSubmitHistoryType[]>([]);
   const [formattedRequestTask, setFormattedRequestTask] = useState<ReligionTaskReqHistoryType[]>([]);
-  const [formattedReward, setFormattedReward] = useState<RiwayatReward[]>([]);
   const [openDialog, setOpenDialog] = useState(null);
 
   const formatDate = (dateString: string) => {
@@ -145,29 +144,6 @@ const useRiwayatKeagamaan = () => {
     },
   ];
 
-  const rewardColumns = [
-    { key: 'reward_name', header: 'Nama Reward', sortable: true },
-    { key: 'created_at', header: 'Tanggal Penukaran', sortable: true },
-    {
-      key: 'status',
-      header: 'Status',
-      sortable: true,
-      render: (item: RiwayatReward) => (
-        <span
-          className={`px-2 py-1 rounded-full text-sm font-medium
-            ${
-              item.status === 'Perlu Review'
-                ? 'bg-yellow-400 text-yellow-800'
-                : item.status === 'Ditolak'
-                ? 'bg-red-400 text-red-800'
-                : 'bg-green-400 text-green-800'
-            }`}
-        >
-          {item.status}
-        </span>
-      ),
-    },
-  ];
 
   return {
     activeTab,
@@ -182,7 +158,6 @@ const useRiwayatKeagamaan = () => {
     requestTaskData: filteredRequestTaskData,
     uploadTaskColumns,
     requestTaskColumns,
-    rewardColumns,
     isLoading: loadingRiwayatUploadTask || loadingRiwayatRequestTask,
     error: errorRiwayatUploadTask || errorRiwayatRequestTask,
   };

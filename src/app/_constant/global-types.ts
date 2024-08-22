@@ -145,3 +145,14 @@ export type ReligionTaskReqHistoryType = {
   created_at: string;
   updated_at: string;
 };
+
+export type RiwayatPointType = {
+  id: string;
+  user_id: string;
+  user_name: string;
+  point: number;
+  description: string;
+  date: string;
+  created_at: string;
+  updated_at: string;
+}

@@ -249,3 +249,40 @@ export const LeaderboardSkeleton = () => (
     ))}
   </div>
 );
+
+export const RiwayatPointSkeleton = () => {
+  return (
+    <div className="page-wrapper bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen p-4 sm:p-6 md:p-8">
+      <div className="mx-auto max-w-7xl">
+        <div className="flex items-center mb-6">
+          <Skeleton className="h-8 w-8 sm:h-10 sm:w-10 rounded-full mr-3" />
+          <Skeleton className="h-8 sm:h-10 w-48 sm:w-64" />
+        </div>
+
+        <div className="bg-white shadow-xl rounded-lg overflow-hidden">
+          <div className="p-4 sm:p-6">
+            <div className="flex justify-end mb-6">
+              <Skeleton className="h-10 w-32" />
+            </div>
+
+            <div className="space-y-4">
+              <div className="flex space-x-4">
+                {[...Array(5)].map((_, index) => (
+                  <Skeleton key={index} className="h-8 flex-grow" />
+                ))}
+              </div>
+              
+              {[...Array(5)].map((_, rowIndex) => (
+                <div key={rowIndex} className="flex space-x-4">
+                  {[...Array(5)].map((_, colIndex) => (
+                    <Skeleton key={colIndex} className="h-12 flex-grow" />
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
