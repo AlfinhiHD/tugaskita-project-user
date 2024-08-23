@@ -93,35 +93,50 @@ const useRiwayat = () => {
   }, [riwayatReward]);
 
   const filteredUploadTaskData = useMemo(() => {
+    if (!formattedUploadTask || formattedUploadTask.length === 0) return [];
+
     return formattedUploadTask.filter((task) => {
-      const matchSearch = task.task_name.toLowerCase().includes(searchTerm.toLowerCase());
-      const matchStatus = statusFilter === "semua" || task.status === statusFilter;
+      const matchSearch = task.task_name
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase());
+      const matchStatus =
+        statusFilter === "semua" || task.status === statusFilter;
       const matchDate = !dateFilter || task.created_at === dateFilter;
-  
+
       return matchSearch && matchStatus && matchDate;
     });
   }, [formattedUploadTask, searchTerm, statusFilter, dateFilter]);
 
   const filteredRequestTaskData = useMemo(() => {
+    if (!formattedRequestTask || formattedRequestTask.length === 0) return [];
+
     return formattedRequestTask.filter((task) => {
-      const matchSearch = task.title?.toLowerCase().includes(searchTerm.toLowerCase());
-      const matchStatus = statusFilter === "semua" || task.status === statusFilter;
+      const matchSearch = task.title
+        ?.toLowerCase()
+        .includes(searchTerm.toLowerCase());
+      const matchStatus =
+        statusFilter === "semua" || task.status === statusFilter;
       const matchDate = !dateFilter || task.created_at === dateFilter;
-  
+
       return matchSearch && matchStatus && matchDate;
     });
   }, [formattedRequestTask, searchTerm, statusFilter, dateFilter]);
-  
+
   const filteredRewardData = useMemo(() => {
+    if (!formattedReward || formattedReward.length === 0) return [];
+
     return formattedReward.filter((reward) => {
-      const matchSearch = reward.reward_name.toLowerCase().includes(searchTerm.toLowerCase());
-      const matchStatus = statusFilter === "semua" || reward.status === statusFilter;
+      const matchSearch = reward.reward_name
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase());
+      const matchStatus =
+        statusFilter === "semua" || reward.status === statusFilter;
       const matchDate = !dateFilter || reward.created_at === dateFilter;
-  
+
       return matchSearch && matchStatus && matchDate;
     });
   }, [formattedReward, searchTerm, statusFilter, dateFilter]);
-
+  
   const uploadTaskColumns = [
     { key: "task_name", header: "Nama Task", sortable: true },
     { key: "created_at", header: "Tanggal", sortable: true },
@@ -148,7 +163,11 @@ const useRiwayat = () => {
       key: "actions",
       header: "Aksi",
       render: (item: RiwayatUploadTaskType) => (
-        <UploadTaskDialog task={item} openDialog={openDialog} setOpenDialog={setOpenDialog} />
+        <UploadTaskDialog
+          task={item}
+          openDialog={openDialog}
+          setOpenDialog={setOpenDialog}
+        />
       ),
     },
   ];
@@ -180,11 +199,15 @@ const useRiwayat = () => {
       key: "actions",
       header: "Aksi",
       render: (item: RiwayatUploadTaskType) => (
-        <RequestTaskDialog task={item} openDialog={openDialog} setOpenDialog={setOpenDialog} />
+        <RequestTaskDialog
+          task={item}
+          openDialog={openDialog}
+          setOpenDialog={setOpenDialog}
+        />
       ),
     },
   ];
-  
+
   const rewardColumns = [
     { key: "reward_name", header: "Nama Reward", sortable: true },
     { key: "created_at", header: "Tanggal Penukaran", sortable: true },
@@ -224,8 +247,12 @@ const useRiwayat = () => {
     uploadTaskColumns,
     requestTaskColumns,
     rewardColumns,
-    isLoading: loadingRiwayatUploadTask || loadingRiwayatRequestTask || loadingRiwayatReward,
-    error: errorRiwayatUploadTask || errorRiwayatRequestTask || errorRiwayatReward,
+    isLoading:
+      loadingRiwayatUploadTask ||
+      loadingRiwayatRequestTask ||
+      loadingRiwayatReward,
+    error:
+      errorRiwayatUploadTask || errorRiwayatRequestTask || errorRiwayatReward,
   };
 };
 
