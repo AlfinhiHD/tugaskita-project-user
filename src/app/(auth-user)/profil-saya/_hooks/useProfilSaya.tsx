@@ -2,16 +2,14 @@ import {
   ProfileSiswaType,
   ResponseDTO,
   TaskDoneType,
+  TotalPenaltyType,
 } from "@/app/_constant/global-types";
 import SiswaService from "@/app/_services/siswa-service";
-import { BASE_IMAGE_URL } from "@/app/_utils/axios.instance";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
 
 const useProfilSaya = () => {
-
   const [isChangingPassword, setIsChangingPassword] = useState(false);
-  const [updatedData, setUpdatedData] = useState(null);
 
   const {
     data: profile,
@@ -22,16 +20,6 @@ const useProfilSaya = () => {
     SiswaService.getSiswaProfile()
   );
 
-  useEffect(() => {
-    if (profile && profile.data) {
-      const updatedData = {
-        ...profile.data,
-        image: profile.data.image ? `${BASE_IMAGE_URL}${profile.data.image.replace('public/', '')}` : null
-      };
-      setUpdatedData(updatedData);
-    }
-  }, [profile]);
-
   const {
     data: taskDone,
     error: errorTaskDone,
@@ -41,17 +29,23 @@ const useProfilSaya = () => {
     SiswaService.getCountTaskDone()
   );
 
-  useEffect(() => {
-    console.log(profile)
-  })
+  const {
+    data: totalPenalty,
+    error: errorTotalPenalty,
+    mutate: mutateTotalPenalty,
+    isLoading: loadingTotalPenalty,
+  } = useSWR<TotalPenaltyType, Error>(["/sum-penalty"], () => SiswaService.totalPinalty());
 
   return {
-    user: updatedData,
+    user: profile?.data,
     loadingProfile,
     isChangingPassword,
     setIsChangingPassword,
     taskDone: taskDone?.count,
     loadingTaskDone,
+    totalPenalty: totalPenalty?.count,
+    loadingTotalPenalty,
+    errorTotalPenalty,
   };
 };
 

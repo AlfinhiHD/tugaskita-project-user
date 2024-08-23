@@ -49,6 +49,10 @@ export type TaskDoneType = {
   count: number;
 };
 
+export type TotalPenaltyType = {
+  count: number;
+}
+
 export type RewardType = {
   id: string;
   name: string;

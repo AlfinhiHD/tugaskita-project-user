@@ -4,14 +4,32 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import useProfilSaya from "../_hooks/useProfilSaya";
 import ChangePasswordDialog from "./change-password-dialog";
-import { Mail, Star, CheckCircle, User, Book, MapPin, School } from "lucide-react";
+import {
+  Mail,
+  Star,
+  CheckCircle,
+  User,
+  Book,
+  MapPin,
+  School,
+  AlertCircle,
+} from "lucide-react";
 import { ProfilSayaSkeleton } from "@/app/_components/skeletons";
 import Image from "next/image";
 
 const ProfilSaya = () => {
-  const { user, isChangingPassword, setIsChangingPassword, taskDone, loadingProfile, loadingTaskDone } = useProfilSaya();
+  const {
+    user,
+    totalPenalty,
+    isChangingPassword,
+    setIsChangingPassword,
+    taskDone,
+    loadingProfile,
+    loadingTaskDone,
+    loadingTotalPenalty,
+  } = useProfilSaya();
 
-  if (loadingProfile && loadingTaskDone) {
+  if (loadingProfile && loadingTaskDone && loadingTotalPenalty) {
     return <ProfilSayaSkeleton />;
   }
 
@@ -26,7 +44,7 @@ const ProfilSaya = () => {
         <div className="bg-blue-700 p-8 text-white">
           <div className="flex flex-col md:flex-row items-center">
             <Image
-              src={user?.image || '/assets/images/default-image.jpg'}
+              src={user?.image || "/assets/images/default-image.jpg"}
               alt={user?.name}
               width={192}
               height={192}
@@ -43,13 +61,13 @@ const ProfilSaya = () => {
         </div>
 
         <div className="p-8">
-          <div className="grid grid-cols-2 gap-6 mb-8">
+          <div className="grid grid-cols-3 gap-6 mb-8">
             <div className="bg-blue-100 p-6 rounded-lg text-center">
               <div className="flex items-center justify-center mb-2">
                 <Star className="w-6 h-6 text-blue-700 mr-2" />
                 <p className="text-lg font-semibold text-blue-700">Poin</p>
               </div>
-              <p className="text-3xl font-bold text-blue-800">{user?.point}</p>
+              <p className="text-xl md:text-3xl font-bold text-blue-800">{user?.point}</p>
             </div>
             <div className="bg-green-100 p-6 rounded-lg text-center">
               <div className="flex items-center justify-center mb-2">
@@ -58,31 +76,47 @@ const ProfilSaya = () => {
                   Tugas Selesai
                 </p>
               </div>
-              <p className="text-3xl font-bold text-green-800">
-                {taskDone}
-              </p>
+              <p className="text-xl md:text-3xl font-bold text-green-800">{taskDone}</p>
+            </div>
+            <div className="bg-red-100 p-6 rounded-lg text-center">
+              <div className="flex items-center justify-center mb-2">
+                <AlertCircle className="w-6 h-6 text-red-700 mr-2" />
+                <p className="text-lg font-semibold text-red-700">
+                  Total Penalty
+                </p>
+              </div>
+              <p className="text-xl md:text-3xl font-bold text-red-800">{totalPenalty}</p>
             </div>
           </div>
 
-          {/* New section for additional details */}
           <div className="bg-gray-50 p-6 rounded-lg mb-8">
-            <h3 className="text-xl font-semibold text-gray-800 mb-4">Informasi Lainnya</h3>
+            <h3 className="text-xl font-semibold text-gray-800 mb-4">
+              Informasi Lainnya
+            </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="flex items-center">
                 <Book className="w-5 h-5 text-blue-600 mr-2" />
-                <p><span className="font-medium">Kelas:</span> {user?.class}</p>
+                <p>
+                  <span className="font-medium">Kelas:</span> {user?.class}
+                </p>
               </div>
               <div className="flex items-center">
                 <School className="w-5 h-5 text-blue-600 mr-2" />
-                <p><span className="font-medium">Sekolah:</span> {user?.school}</p>
+                <p>
+                  <span className="font-medium">Sekolah:</span> {user?.school}
+                </p>
               </div>
               <div className="flex items-center">
                 <Book className="w-5 h-5 text-blue-600 mr-2" />
-                <p><span className="font-medium">Agama:</span> {user?.religion}</p>
+                <p>
+                  <span className="font-medium">Agama:</span> {user?.religion}
+                </p>
               </div>
               <div className="flex items-center">
                 <MapPin className="w-5 h-5 text-blue-600 mr-2" />
-                <p><span className="font-medium">Alamat:</span> {user?.address}</p>
+                <p>
+                  <span className="font-medium">Alamat:</span> {user?.address}
+                </p>
               </div>
             </div>
           </div>

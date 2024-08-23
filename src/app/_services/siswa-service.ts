@@ -18,11 +18,18 @@ const getTopRank = async () => {
   return res.data;
 };
 
+const totalPinalty = async () => {
+  const res = await instance.get("/sum-penalty");
+
+  return res.data
+}
+
 
 const SiswaService = {
   getSiswaProfile,
   getCountTaskDone,
-  getTopRank
+  getTopRank,
+  totalPinalty
 };
 
 export default SiswaService;

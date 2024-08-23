@@ -5,7 +5,6 @@ import {
 } from "@/app/_constant/global-types";
 import RewardService from "@/app/_services/reward-service";
 import SiswaService from "@/app/_services/siswa-service";
-import { BASE_IMAGE_URL } from "@/app/_utils/axios.instance";
 import { useState, useEffect } from "react";
 import useSWR from "swr";
 
@@ -33,17 +32,6 @@ const useTukarPoin = () => {
   } = useSWR<ResponseDTO<ProfileSiswaType>, Error>(["/user/profile"], () =>
     SiswaService.getSiswaProfile()
   );
-
-  useEffect(() => {
-    if (reward && reward?.data) {
-      const formatedData = reward?.data.map((user) => ({
-        ...user,
-        image: `${BASE_IMAGE_URL}${user.image.replace("public/", "")}`,
-      }));
-
-      setFilteredRewards(formatedData);
-    }
-  }, [reward]);
 
   useEffect(() => {
     const filtered = reward?.data?.filter((reward) => {
