@@ -19,11 +19,15 @@ const useRiwayatPoint = () => {
   );
 
   const filteredPointHistory = useMemo(() => {
-    return pointHistory?.data?.filter((history) => {
+    if (!pointHistory?.data || pointHistory.data.length === 0) {
+      return [];
+    }
+    
+    return pointHistory.data.filter((history) => {
       const matchSearch = history.description.toLowerCase().includes(searchTerm.toLowerCase());
       // const matchStatus = statusFilter === 'semua' || history.status === statusFilter;
       // const matchDate = !dateFilter || history.created_at === dateFilter;
-
+  
       return matchSearch;
     });
   }, [pointHistory?.data, searchTerm]);
