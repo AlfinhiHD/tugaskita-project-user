@@ -83,7 +83,7 @@ const Sidebar = () => {
         <div className="flex items-center justify-between">
           <div className="flex items-center">
             <Image
-              src="/assets/logo/logo-tugaskita.png"
+              src="/assets/logo/logo-taruna-nusantara.png"
               alt="TugasKita logo"
               width={30}
               height={30}
@@ -110,7 +110,7 @@ const Sidebar = () => {
           <div className="p-4 lg:block hidden">
             <div className="flex items-center mb-8">
               <Image
-                src="/assets/logo/logo-tugaskita.png"
+                src="/assets/logo/logo-taruna-nusantara.png"
                 alt="TugasKita logo"
                 width={40}
                 height={40}

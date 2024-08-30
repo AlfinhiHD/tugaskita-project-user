@@ -16,55 +16,56 @@ const Leaderboard = () => {
   const { leaderboard, isLoading } = useLeaderboard();
 
   const getRankIcon = (rank) => {
+    const baseClasses = "w-4 h-4 sm:w-6 sm:h-6 md:w-8 md:h-8";
     switch (rank) {
       case 1:
-        return <Trophy className="w-6 h-6 sm:w-8 sm:h-8 text-yellow-400" />;
+        return <Trophy className={`${baseClasses} text-yellow-400`} />;
       case 2:
-        return <Medal className="w-6 h-6 sm:w-8 sm:h-8 text-gray-400" />;
+        return <Medal className={`${baseClasses} text-gray-400`} />;
       case 3:
-        return <Medal className="w-6 h-6 sm:w-8 sm:h-8 text-yellow-700" />;
+        return <Medal className={`${baseClasses} text-yellow-700`} />;
       default:
-        return <Star className="w-6 h-6 sm:w-8 sm:h-8 text-blue-400" />;
+        return <Star className={`${baseClasses} text-blue-400`} />;
     }
   };
 
   return (
-    <div className="page-wrapper bg-gradient-to-br from-purple-50 to-indigo-100 min-h-screen p-4 sm:p-8">
-      <div className="max-w-4xl mx-auto mt-3">
-        <h1 className="font-bold text-3xl sm:text-4xl mt-3 mb-8 text-purple-800 flex items-center">
-          <Trophy className="mr-3 h-8 w-8 sm:h-10 sm:w-10" />
+    <div className="page-wrapper bg-gradient-to-br from-purple-50 to-indigo-100 min-h-screen p-2 sm:p-4 md:p-8">
+      <div className="max-w-4xl mx-auto mt-2 sm:mt-3">
+        <h1 className="font-bold text-2xl sm:text-3xl md:text-4xl mt-2 sm:mt-3 mb-4 sm:mb-6 md:mb-8 text-purple-800 flex items-center">
+          <Trophy className="mr-2 sm:mr-3 h-6 w-6 sm:h-8 sm:w-8 md:h-10 md:w-10" />
           Top 15 Leaderboard
         </h1>
 
         <Card className="bg-white shadow-xl rounded-xl overflow-hidden">
-          <CardHeader className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white p-4 sm:p-6">
-            <CardTitle className="text-xl sm:text-2xl font-bold flex items-center">
-              <Star className="w-6 h-6 sm:w-8 sm:h-8 mr-3" />
+          <CardHeader className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white p-3 sm:p-4 md:p-6">
+            <CardTitle className="text-lg sm:text-xl md:text-2xl font-bold flex items-center">
+              <Star className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 mr-2 sm:mr-3" />
               Peringkat Siswa Terbaik
             </CardTitle>
           </CardHeader>
-          <CardContent className="p-4 sm:p-6">
+          <CardContent className="p-2 sm:p-4 md:p-6">
             {isLoading ? (
               <LeaderboardSkeleton />
             ) : (
-              <ul className="space-y-3 sm:space-y-4">
+              <ul className="space-y-2 sm:space-y-3 md:space-y-4">
                 {leaderboard.map((student, index) => (
                   <li
                     key={index}
-                    className="flex items-center gap-x-2 sm:gap-x-4 bg-gradient-to-r from-purple-100 to-indigo-100 p-3 sm:p-4 rounded-lg transition-all duration-300 hover:shadow-md"
+                    className="flex items-center gap-x-1 sm:gap-x-2 md:gap-x-4 bg-gradient-to-r from-purple-100 to-indigo-100 p-2 sm:p-3 md:p-4 rounded-lg transition-all duration-300 hover:shadow-md"
                   >
-                    <span className="text-lg sm:text-2xl font-bold text-gray-700 w-6 sm:w-8 text-center">
+                    <span className="text-base sm:text-lg md:text-2xl font-bold text-gray-700 w-4 sm:w-6 md:w-8 text-center">
                       {index + 1}
                     </span>
                     {getRankIcon(index + 1)}
-                    <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-purple-400 to-indigo-500 flex items-center justify-center text-white font-bold text-sm sm:text-xl">
+                    <div className="w-6 h-6 sm:w-8 sm:h-8 md:w-12 md:h-12 rounded-full bg-gradient-to-br from-purple-400 to-indigo-500 flex items-center justify-center text-white font-bold text-xs sm:text-sm md:text-xl">
                       {student.name.charAt(0)}
                     </div>
                     <div className="flex-grow flex items-center justify-between">
                       <TooltipProvider>
                         <Tooltip>
                           <TooltipTrigger>
-                            <p className="font-semibold text-sm sm:text-lg text-gray-800 truncate max-w-[100px] sm:max-w-[200px]">
+                            <p className="font-semibold text-xs sm:text-sm md:text-lg text-gray-800 truncate max-w-[8rem] sm:max-w-[11rem] md:max-w-[13rem]">
                               {student.name}
                             </p>
                           </TooltipTrigger>
@@ -73,7 +74,7 @@ const Leaderboard = () => {
                           </TooltipContent>
                         </Tooltip>
                       </TooltipProvider>
-                      <p className="text-sm sm:text-lg font-bold text-indigo-600">
+                      <p className="text-xs sm:text-sm md:text-lg font-bold text-indigo-600">
                         {student.point} poin
                       </p>
                     </div>
