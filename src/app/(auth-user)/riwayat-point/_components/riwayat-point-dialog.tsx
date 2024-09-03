@@ -26,7 +26,7 @@ const RiwayatPointDialog = ({ task, openDialog, setOpenDialog }) => {
       </DialogTrigger>
       <DialogContent className="bg-gradient-to-br from-blue-600 to-indigo-800 text-white">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-bold">{task.user_name}</DialogTitle>
+          <DialogTitle className="text-2xl font-bold">{task.task_name}</DialogTitle>
         </DialogHeader>
         <div className="mt-4 bg-white rounded-lg p-6 text-blue-900">
           <div className="grid grid-cols-2 gap-4">
@@ -36,17 +36,17 @@ const RiwayatPointDialog = ({ task, openDialog, setOpenDialog }) => {
             </div>
             <div>
               <span className="font-semibold">Tanggal:</span>
-              <p className="mt-1">{task.date}</p>
+              <p className="mt-1">{task.created_at}</p>
             </div>
           </div>
-          <div className="mt-4">
+          {/* <div className="mt-4">
             <span className="font-semibold">Keterangan:</span>
             <p className="mt-2 text-gray-700">{task.description}</p>
-          </div>
+          </div> */}
         </div>
         <div className="mt-6 flex justify-end">
           <DialogClose asChild>
-            <Button variant="outline" className="text-white border-white hover:bg-blue-700">
+            <Button variant="outline" className="text-blue-700 border-white hover:bg-blue-700 hover:text-white">
               Tutup
             </Button>
           </DialogClose>

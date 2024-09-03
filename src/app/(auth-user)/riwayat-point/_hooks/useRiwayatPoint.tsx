@@ -3,10 +3,16 @@ import PointService from "@/app/_services/point-service";
 import { useEffect, useMemo, useState } from "react";
 import useSWR from "swr";
 import RiwayatPointDialog from "../_components/riwayat-point-dialog";
+import { headers } from "next/headers";
 
 const useRiwayatPoint = () => {
   const [openDialog, setOpenDialog] = useState(null);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState("semua");
+  const [dateFilter, setDateFilter] = useState("");
+  const [formattedPointHistory, setFormattedPointHistory] = useState<
+    RiwayatPointType[]
+  >([]);
 
   const {
     data: pointHistory,
@@ -18,25 +24,59 @@ const useRiwayatPoint = () => {
     () => PointService.getPointHistory()
   );
 
+  const formatDate = (dateString: string) => {
+    return dateString.substring(0, 10);
+  };
+
+  useEffect(() => {
+    if (pointHistory?.data) {
+      setFormattedPointHistory(
+        pointHistory.data.map((task) => ({
+          ...task,
+          created_at: formatDate(task.created_at),
+        }))
+      );
+    }
+  }, [pointHistory]);
+
   const filteredPointHistory = useMemo(() => {
-    if (!pointHistory?.data || pointHistory.data.length === 0) {
+    if (!formattedPointHistory || formattedPointHistory.length === 0) {
       return [];
     }
-    
-    return pointHistory.data.filter((history) => {
-      const matchSearch = history.description.toLowerCase().includes(searchTerm.toLowerCase());
-      // const matchStatus = statusFilter === 'semua' || history.status === statusFilter;
-      // const matchDate = !dateFilter || history.created_at === dateFilter;
-  
-      return matchSearch;
+
+    return formattedPointHistory.filter((history) => {
+      const matchSearch = history.task_name
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase());
+      const matchStatus =
+        statusFilter === "semua" || history.type === statusFilter;
+      const matchDate = !dateFilter || history.created_at === dateFilter;
+
+      return matchSearch && matchStatus && matchDate;
     });
-  }, [pointHistory?.data, searchTerm]);
+  }, [formattedPointHistory, searchTerm]);
 
   const pointHistoryColumns = [
-    { key: "user_name", header: "Nama Task", sortable: true },
+    { key: "task_name", header: "Nama Task", sortable: true },
     { key: "point", header: "Point Berubah", sortable: true },
-    { key: "date", header: "Tanggal", sortable: true },
-    { key: "description", header: "Keterangan", sortable: true },
+    { key: "created_at", header: "Tanggal", sortable: true },
+    {
+      key: "type",
+      header: "Type",
+      sortable: true,
+      render: (item: RiwayatPointType) => (
+        <span
+          className={`px-2 py-1 rounded-full text-sm font-medium
+          ${
+            item.type === "Penalty"
+              ? "bg-red-400 text-red-800"
+              : "bg-green-400 text-green-800"
+          }`}
+        >
+          {item.type}
+        </span>
+      ),
+    },
     {
       key: "actions",
       header: "Aksi",
@@ -50,7 +90,6 @@ const useRiwayatPoint = () => {
     },
   ];
 
-
   return {
     pointHistory: filteredPointHistory,
     errorPointHistory,
@@ -58,8 +97,8 @@ const useRiwayatPoint = () => {
     loadingPointHistory,
     pointHistoryColumns,
     setSearchTerm,
-    searchTerm
-  }
+    searchTerm,
+  };
 };
 
-export default useRiwayatPoint
+export default useRiwayatPoint;

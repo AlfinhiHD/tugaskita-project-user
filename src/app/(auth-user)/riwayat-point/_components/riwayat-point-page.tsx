@@ -54,7 +54,7 @@ const RiwayatPointPage = () => {
               <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
                 <div className="relative w-full sm:w-64">
                   <Input
-                    placeholder="Cari berdasarkan keterangan..."
+                    placeholder="Cari berdasarkan nama tugas..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     className="pl-10 pr-4 py-2 w-full rounded-full"
