@@ -27,7 +27,7 @@ const TukarPoinPage = () => {
     currentRewards,
     pageCount,
     userPoints,
-    loadingrReward,
+    loadingReward,
     loadingProfile,
   } = useTukarPoin();
 
@@ -35,7 +35,7 @@ const TukarPoinPage = () => {
     console.log("Reward ditukar:", reward);
   };
 
-  if (loadingrReward && loadingProfile) {
+  if (currentRewards && loadingReward && loadingProfile) {
     return <TukarPoinPageSkeleton />;
   }
 

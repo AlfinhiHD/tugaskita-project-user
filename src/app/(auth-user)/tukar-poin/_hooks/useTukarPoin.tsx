@@ -13,13 +13,14 @@ const useTukarPoin = () => {
   const [pointRange, setPointRange] = useState("semua");
   const [currentPage, setCurrentPage] = useState(1);
   const [filteredRewards, setFilteredRewards] = useState([]);
+  const [currentRewards, setCurrentRewards] = useState([]);
   const itemsPerPage = 6;
 
   const {
     data: reward,
     error: errorReward,
     mutate: mutateReward,
-    isLoading: loadingrReward,
+    isLoading: loadingReward,
   } = useSWR<ResponseDTO<RewardType[]>, Error>(["/admin-reward"], () =>
     RewardService.getReward()
   );
@@ -53,10 +54,16 @@ const useTukarPoin = () => {
   }, [search, pointRange]);
 
   const pageCount = Math.ceil(filteredRewards?.length / itemsPerPage);
-  const currentRewards = filteredRewards?.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
+
+  useEffect(() => {
+    const currentRewards = filteredRewards?.slice(
+      (currentPage - 1) * itemsPerPage,
+      currentPage * itemsPerPage
+    );
+
+    setCurrentRewards(currentRewards)
+  }, [filteredRewards, currentPage])
+
 
   return {
     search,
@@ -70,7 +77,7 @@ const useTukarPoin = () => {
     pageCount,
     userPoints: profile?.data?.point,
     itemsPerPage,
-    loadingrReward,
+    loadingReward,
     loadingProfile,
   };
 };
