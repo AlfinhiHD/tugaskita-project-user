@@ -62,13 +62,28 @@ const ProfilSaya = () => {
 
         <div className="p-8">
           <div className="grid grid-cols-3 gap-6 mb-8">
+            {/* Monthly Points and Total Points */}
             <div className="bg-blue-100 p-6 rounded-lg text-center">
               <div className="flex items-center justify-center mb-2">
                 <Star className="w-6 h-6 text-blue-700 mr-2" />
-                <p className="text-lg font-semibold text-blue-700">Poin</p>
+                <p className="text-lg font-semibold text-blue-700">
+                  Poin Bulanan
+                </p>
               </div>
-              <p className="text-xl md:text-3xl font-bold text-blue-800">{user?.point}</p>
+              <p className="text-xl md:text-3xl font-bold text-blue-800">
+                {user?.point}
+              </p>
+              <div className="mt-4">
+                <p className="text-sm font-semibold text-blue-600">
+                  Total Poin:
+                </p>
+                <p className="text-lg font-bold text-blue-700">
+                  {user?.total_point}
+                </p>
+              </div>
             </div>
+
+            {/* Tasks Completed */}
             <div className="bg-green-100 p-6 rounded-lg text-center">
               <div className="flex items-center justify-center mb-2">
                 <CheckCircle className="w-6 h-6 text-green-700 mr-2" />
@@ -76,8 +91,12 @@ const ProfilSaya = () => {
                   Tugas Selesai
                 </p>
               </div>
-              <p className="text-xl md:text-3xl font-bold text-green-800">{taskDone}</p>
+              <p className="text-xl md:text-3xl font-bold text-green-800">
+                {taskDone}
+              </p>
             </div>
+
+            {/* Total Penalty */}
             <div className="bg-red-100 p-6 rounded-lg text-center">
               <div className="flex items-center justify-center mb-2">
                 <AlertCircle className="w-6 h-6 text-red-700 mr-2" />
@@ -85,7 +104,9 @@ const ProfilSaya = () => {
                   Total Penalty
                 </p>
               </div>
-              <p className="text-xl md:text-3xl font-bold text-red-800">{totalPenalty}</p>
+              <p className="text-xl md:text-3xl font-bold text-red-800">
+                {totalPenalty}
+              </p>
             </div>
           </div>
 

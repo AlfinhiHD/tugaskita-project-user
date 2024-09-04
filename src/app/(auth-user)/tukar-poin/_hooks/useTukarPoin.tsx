@@ -21,7 +21,7 @@ const useTukarPoin = () => {
     error: errorReward,
     mutate: mutateReward,
     isLoading: loadingReward,
-  } = useSWR<ResponseDTO<RewardType[]>, Error>(["/admin-reward"], () =>
+  } = useSWR<ResponseDTO<RewardType[]>, Error>(["/user-reward"], () =>
     RewardService.getReward()
   );
 
@@ -74,7 +74,7 @@ const useTukarPoin = () => {
     filteredRewards,
     currentRewards,
     pageCount,
-    userPoints: profile?.data?.point,
+    userPoints: profile?.data?.total_point,
     itemsPerPage,
     loadingReward,
     loadingProfile,

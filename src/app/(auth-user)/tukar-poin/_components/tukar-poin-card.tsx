@@ -11,6 +11,7 @@ const RewardCard = ({ reward, userPoints, onExchange }) => {
           <Gift className="w-8 h-8 mr-4 flex-shrink-0" />
           <h3 className="font-semibold text-lg ">{reward.name}</h3>
         </div>
+        <p className="mb-5">Stok Produk : {reward.stock}</p>
         <img
           src={reward.image}
           alt={reward.name}

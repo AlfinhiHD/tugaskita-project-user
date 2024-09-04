@@ -1,7 +1,7 @@
 import instance from "../_utils/axios.instance";
 
 const getReward = async () => {
-  const res = await instance.get("/admin-reward");
+  const res = await instance.get("/user-reward");
 
   return res.data;
 };
