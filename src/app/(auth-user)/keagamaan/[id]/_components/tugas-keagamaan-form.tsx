@@ -74,7 +74,7 @@ const FormSubmitKeagamaan = () => {
           <div className="bg-purple-50 p-3 sm:p-4 rounded-lg mb-4 sm:mb-6">
             <p className="font-semibold text-purple-800 mb-2">Deskripsi Tugas:</p>
             <p className="text-gray-700 text-sm sm:text-base">
-              {taskDetail.description}
+              {taskDetail.description ? taskDetail.description : "Tidak Ada"}
             </p>
           </div>
 

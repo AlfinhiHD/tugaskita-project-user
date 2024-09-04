@@ -15,14 +15,14 @@ const KeagamaanCard = ({ task }) => {
           <div className="bg-white p-5 text-purple-800 rounded-md flex-grow flex flex-col">
             <p className="font-bold text-lg">Deskripsi : </p>
             <p className="text-sm my-5 line-clamp-3 flex-grow overflow-hidden">
-              {task.description}
+              {task.description ? task.description : "Tidak ada"}
             </p>
             <p className="text-sm mb-2">
               <b>Tenggat:</b> {task.end_date}
             </p>
-            <p className="text-sm mb-2">
+            {/* <p className="text-sm mb-2">
               <b>Agama:</b> {task.religion}
-            </p>
+            </p> */}
           </div>
 
           <div className="mt-4 text-center">

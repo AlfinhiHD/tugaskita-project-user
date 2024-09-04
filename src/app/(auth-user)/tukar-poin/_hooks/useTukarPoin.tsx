@@ -51,7 +51,7 @@ const useTukarPoin = () => {
     });
     setFilteredRewards(filtered);
     setCurrentPage(1);
-  }, [search, pointRange]);
+  }, [reward, search, pointRange]);
 
   const pageCount = Math.ceil(filteredRewards?.length / itemsPerPage);
 
@@ -61,9 +61,8 @@ const useTukarPoin = () => {
       currentPage * itemsPerPage
     );
 
-    setCurrentRewards(currentRewards)
-  }, [filteredRewards, currentPage])
-
+    setCurrentRewards(currentRewards);
+  }, [filteredRewards, currentPage]);
 
   return {
     search,
