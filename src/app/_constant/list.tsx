@@ -33,7 +33,7 @@ export const navigationItems = [
   },
   {
     icon: ClipboardList,
-    label: "Riwayat",
+    label: "Riwayat Tugas",
     path: "/riwayat",
     id: "riwayat",
   },
